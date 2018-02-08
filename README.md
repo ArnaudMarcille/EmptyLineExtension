@@ -5,8 +5,7 @@ Visual Studio extension for remove empty lines (more than one consecutive empty 
 
 ## Getting Started
 
-The extension is available on the marketplace: https://marketplace.visualstudio.com/items?itemName=Mybiblipi.EmptyLineExtention  
-Or directly in Visual studio in Tool => Extension and Update 
+The extension is available [the marketplace](https://marketplace.visualstudio.com/items?itemName=Mybiblipi.EmptyLineExtention) or directly in Visual studio in Tool => Extension and Update 
 
 ### Prerequisites
 
