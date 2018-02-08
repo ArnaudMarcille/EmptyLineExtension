@@ -53,9 +53,10 @@
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
       <Button guid="guidEmptyLineCommandPackageCmdSet" id="EmptyLineCommandId" priority="0x0100" type="Button">
-        <Parent guid="guidEmptyLineCommandPackageCmdSet" id="MyMenuGroup" />        
+        <Parent guid="guidEmptyLineCommandPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Remove Empty line</ButtonText>
+          <ButtonText>Remove empty lines</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -67,18 +68,27 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      
+      <Bitmap guid="guidImages" href="Resources\EmptyLineCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
     </Bitmaps>
   </Commands>
 
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidEmptyLineCommandPackage" value="{75b7d0dd-1b0c-4e17-ad54-6f44a33928e8}" />
+    <GuidSymbol name="guidEmptyLineCommandPackage" value="{327c4b43-3c29-4458-8754-cd65e2854965}" />
 
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidEmptyLineCommandPackageCmdSet" value="{b7b8e1db-2d9c-41cf-affe-90b97e36a675}">
+    <GuidSymbol name="guidEmptyLineCommandPackageCmdSet" value="{40013f71-5734-44b6-ad7d-2de7ae21de78}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
       <IDSymbol name="EmptyLineCommandId" value="0x0100" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidImages" value="{1fb91532-2be6-46d2-8215-0db905a13318}" >
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

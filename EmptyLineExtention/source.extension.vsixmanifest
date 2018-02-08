@@ -1,13 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="EmptyLineExtension.a9bdd512-d5c0-4812-9105-e7c55d3de45a" Version="1.0" Language="en-US" Publisher="MARCILLE, ARNAUD" />
-        <DisplayName>EmptyLine Extension</DisplayName>
-        <Description xml:space="preserve">Visual Studio extension for remove empty lines (more than one consecutive empty line)
-</Description>
-        <MoreInfo>https://github.com/ArnaudMarcille/EmptyLineExtension</MoreInfo>
-        <License>https://github.com/ArnaudMarcille/EmptyLineExtension</License>
-        <Icon>EmptyLineCommandPackage.ico</Icon>
+        <Identity Id="EmptyLineExtention.56111e08-646d-4652-85b4-f5e80164251a" Version="1.0" Language="en-US" Publisher="MARCILLE, ARNAUD" />
+        <DisplayName>EmptyLine Extention</DisplayName>
+        <Description xml:space="preserve">Visual Studio extension for remove empty lines (more than one consecutive empty line)</Description>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0]" />
@@ -21,6 +17,5 @@
     </Prerequisites>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
     </Assets>
 </PackageManifest>

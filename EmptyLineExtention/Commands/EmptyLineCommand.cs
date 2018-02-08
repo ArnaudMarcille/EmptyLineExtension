@@ -3,7 +3,7 @@ using System.ComponentModel.Design;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 
-namespace EmptyLineExtension
+namespace EmptyLineExtention.Commands
 {
     /// <summary>
     /// Command handler
@@ -18,7 +18,7 @@ namespace EmptyLineExtension
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("b7b8e1db-2d9c-41cf-affe-90b97e36a675");
+        public static readonly Guid CommandSet = new Guid("40013f71-5734-44b6-ad7d-2de7ae21de78");
 
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -118,9 +118,7 @@ namespace EmptyLineExtension
                     number--;
                 }
                 editPoint.LineDown(1);
-
             }
-
         }
     }
 }

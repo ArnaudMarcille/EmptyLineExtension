@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 
-namespace EmptyLineExtension
+namespace EmptyLineExtention.Commands
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -39,7 +39,7 @@ namespace EmptyLineExtension
         /// <summary>
         /// EmptyLineCommandPackage GUID string.
         /// </summary>
-        public const string PackageGuidString = "75b7d0dd-1b0c-4e17-ad54-6f44a33928e8";
+        public const string PackageGuidString = "327c4b43-3c29-4458-8754-cd65e2854965";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmptyLineCommand"/> class.
