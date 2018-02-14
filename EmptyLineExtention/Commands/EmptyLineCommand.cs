@@ -86,12 +86,28 @@ namespace EmptyLineExtention.Commands
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs e)
         {
+            // Get the current Doc
             EnvDTE80.DTE2 applicationObject = ServiceProvider.GetService(typeof(DTE)) as EnvDTE80.DTE2;
             TextDocument activeDoc = applicationObject.ActiveDocument.Object() as TextDocument;
-            var text = activeDoc.CreateEditPoint(activeDoc.StartPoint).GetText(activeDoc.EndPoint);
+
+            // set default start point
+            int startPoint = 1;
+            int endPoint = activeDoc.EndPoint.Line;
+
+            // initialise edit point
             var editPoint = activeDoc.CreateEditPoint(activeDoc.StartPoint);
+
+            // check if there is a selection
+            if (!activeDoc.Selection.IsEmpty)
+            {
+                startPoint = activeDoc.Selection.TopLine;
+                endPoint = activeDoc.Selection.BottomLine;
+                editPoint.LineDown(startPoint - 1);
+            }
+
+            // remove all multiple space between start and end point
             bool isLastLineEmpty = false;
-            for (int number = 1; number <= activeDoc.EndPoint.Line; number++)
+            for (int number = startPoint; number <= endPoint; number++)
             {
                 bool lineDeleted = false;
                 string line = editPoint.GetLines(number, number + 1);
@@ -106,6 +122,10 @@ namespace EmptyLineExtention.Commands
                     {
                         editPoint.Delete(-1);
                         lineDeleted = true;
+                        if (!activeDoc.Selection.IsEmpty)
+                            endPoint = activeDoc.Selection.BottomLine;
+                        else
+                            endPoint = activeDoc.EndPoint.Line;
                     }
                 }
                 else
