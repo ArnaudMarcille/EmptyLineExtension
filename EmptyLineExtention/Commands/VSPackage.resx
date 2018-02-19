@@ -146,4 +146,13 @@
   <data name="1400" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Settings\Resources\SettingsPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="2110" xml:space="preserve">
+    <value>AutoFormatPackage Extension</value>
+  </data>
+  <data name="2112" xml:space="preserve">
+    <value>AutoFormatPackage Visual Stuido Extension Detailed Info</value>
+  </data>
+  <data name="2400" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Formatter\Resources\AutoFormatPackage.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

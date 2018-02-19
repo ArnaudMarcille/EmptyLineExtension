@@ -68,7 +68,10 @@
     <Compile Include="Core\Settings\OptionPage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Formatter\AutoFormatPackage.cs" />
+    <Compile Include="Formatter\AutoFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EmptyLineService.cs" />
     <Compile Include="Settings\SettingsPackage.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +87,7 @@
     </VSCTCompile>
     <Content Include="Commands\Resources\EmptyLineCommand.png" />
     <Content Include="Commands\Resources\EmptyLineCommandPackage.ico" />
+    <Content Include="Formatter\Resources\AutoFormatPackage.ico" />
     <Content Include="index.html" />
     <Content Include="Settings\Resources\SettingsPackage.ico" />
     <Content Include="stylesheet.css" />
