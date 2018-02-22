@@ -75,7 +75,6 @@ namespace EmptyLineExtention.Formatter
         protected override void Initialize()
         {
             var dte = (DTE)GetService(typeof(DTE));
-
             var runningDocumentTable = new RunningDocumentTable(this);
             plugin = new AutoFormatter(dte, runningDocumentTable, this);
             runningDocumentTable.Advise(plugin);

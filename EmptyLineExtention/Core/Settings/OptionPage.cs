@@ -14,12 +14,6 @@ namespace EmptyLineExtention.Core.Settings
         /// </summary>
         private bool isAutoSaveEnabled;
 
-        /// <summary>
-        /// Control
-        /// </summary>
-        private SettingsControl _control;
-
-
         #endregion
 
         #region Properties
@@ -37,24 +31,11 @@ namespace EmptyLineExtention.Core.Settings
         {
             get
             {
-                return _control;
+                return new SettingsControl(this);
             }
         }
 
         #endregion
 
-        #region Contructor
-
-        public OptionPage()
-        {
-            _control = new SettingsControl(this);
-        }
-
-        #endregion
-
-        #region Methods
-
-
-        #endregion
     }
 }

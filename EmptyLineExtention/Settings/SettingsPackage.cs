@@ -25,7 +25,6 @@ namespace EmptyLineExtention.Settings
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#1110", "#1112", "1.0", IconResourceID = 1400)] // Info on this package for Help/About
     [ProvideOptionPage(typeof(OptionPage), Core.Constants.AppName, Core.Constants.SettingsPageName, 0, 0, true)]
-    [ProvideProfileAttribute(typeof(OptionPage), Core.Constants.AppName, Core.Constants.SettingsPageName, 106, 107, isToolsOptionPage: true, DescriptionResourceID = 108)]
     [Guid(SettingsPackage.PackageGuidString)]
     public sealed class SettingsPackage : Package
     {
@@ -58,7 +57,6 @@ namespace EmptyLineExtention.Settings
                 return (page != null ? page.IsAutoSaveEnabled : false);
             }
         }
-
 
         #endregion
 
