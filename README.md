@@ -2,8 +2,6 @@
 
 Visual Studio extension for remove empty lines (more than one consecutive empty line)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/4310i7mgnbc4vgst?svg=true)](https://ci.appveyor.com/project/ArnaudMarcille/emptylineextension)
-
 ## Getting Started
 
 The extension is available [the marketplace](https://marketplace.visualstudio.com/items?itemName=Mybiblipi.EmptyLineExtention) or directly in Visual studio in *Tools => Extension and Update*
