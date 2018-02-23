@@ -1,8 +1,0 @@
-version: 1.0.{build}
-configuration: Release
-platform: Any CPU
-before_build:
-- cmd: nuget restore
-build:
-  project: C:\projects\emptylineextension\EmptyLineExtention.csproj
-  verbosity: minimal
