@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using EmptyLineExtention.Core.Settings;
 using Microsoft.VisualStudio.Shell;
 
-namespace EmptyLineExtention.Commands
+namespace EmptyLineExtention.Settings
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -24,16 +23,28 @@ namespace EmptyLineExtention.Commands
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true)]
-    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
-    [ProvideMenuResource("Menus.ctmenu", 1)]
-    [Guid(EmptyLineCommandPackage.PackageGuidString)]
-    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class EmptyLineCommandPackage : Package
+    [InstalledProductRegistration("#1110", "#1112", "1.0", IconResourceID = 1400)] // Info on this package for Help/About
+    [ProvideOptionPage(typeof(OptionPage), Core.Constants.AppName, Core.Constants.SettingsPageName, 0, 0, true)]
+    [Guid(SettingsPackage.PackageGuidString)]
+    public sealed class SettingsPackage : Package
     {
         /// <summary>
-        /// EmptyLineCommandPackage GUID string.
+        /// SettingsPackage GUID string.
         /// </summary>
-        public const string PackageGuidString = "327c4b43-3c29-4458-8754-cd65e2854965";
+        public const string PackageGuidString = "4c669564-48ec-4813-9df6-609b4b286ace";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsPackage"/> class.
+        /// </summary>
+        public SettingsPackage()
+        {
+            // Inside this method you can place any initialization code that does not require
+            // any Visual Studio service because at this point the package object is created but
+            // not sited yet inside Visual Studio environment. The place to do all the other
+            // initialization is the Initialize method.
+        }
+
+        #region Properties
 
         /// <summary>
         /// IsAutoSaveEnabled accessor
@@ -47,16 +58,7 @@ namespace EmptyLineExtention.Commands
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmptyLineCommand"/> class.
-        /// </summary>
-        public EmptyLineCommandPackage()
-        {
-            // Inside this method you can place any initialization code that does not require
-            // any Visual Studio service because at this point the package object is created but
-            // not sited yet inside Visual Studio environment. The place to do all the other
-            // initialization is the Initialize method.
-        }
+        #endregion
 
         #region Package Members
 
@@ -66,7 +68,6 @@ namespace EmptyLineExtention.Commands
         /// </summary>
         protected override void Initialize()
         {
-            EmptyLineCommand.Initialize(this);
             base.Initialize();
         }
 
