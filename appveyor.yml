@@ -4,4 +4,5 @@ platform: Any CPU
 before_build:
 - cmd: nuget restore
 build:
+  project: EmptyLineExtention.csproj
   verbosity: minimal
