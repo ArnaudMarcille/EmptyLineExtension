@@ -65,7 +65,7 @@ namespace EmptyLineExtention.Formatter
 
             if (GetAutoSavePropertyValue())
             {
-                EmptyLineService.FormatDocument(document, false);
+                EmptyLineService.FormatDocument(document, false, GetAllowedLinesValue());
             }
 
             return VSConstants.S_OK;
@@ -150,6 +150,28 @@ namespace EmptyLineExtention.Formatter
                 return false;
 
             return optionProperties.IsAutoSaveEnabled;
+        }
+
+        /// <summary>
+        /// Get the value of AllowedLines property
+        /// </summary>
+        /// <returns></returns>
+        private int GetAllowedLinesValue()
+        {
+            OptionPage optionProperties = null;
+            try
+            {
+                optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+            }
+            catch (Exception)
+            {
+                return Core.Constants.DefaultAllowedLines;
+            }
+
+            if (optionProperties == null)
+                return Core.Constants.DefaultAllowedLines;
+
+            return optionProperties.DefaultAllowedLines;
         }
 
         #endregion

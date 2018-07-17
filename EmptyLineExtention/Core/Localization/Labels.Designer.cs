@@ -61,6 +61,15 @@ namespace EmptyLineExtention.Core.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allowed lines :.
+        /// </summary>
+        internal static string SettingsControl_AllowedLines {
+            get {
+                return ResourceManager.GetString("SettingsControl_AllowedLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable auto format on document save..
         /// </summary>
         internal static string SettingsControl_AutoFormat_Content {
