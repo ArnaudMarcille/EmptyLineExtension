@@ -15,7 +15,7 @@ namespace EmptyLineExtention.Core.Settings
         private bool isAutoSaveEnabled;
 
         /// <summary>
-        /// Minimul line to remove
+        /// Minimum line to remove
         /// </summary>
         private int? allowedLines;
 
