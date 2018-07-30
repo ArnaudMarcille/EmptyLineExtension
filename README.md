@@ -1,28 +1,56 @@
+
 # EmptyLine Extension
+
+  
 
 Visual Studio extension for remove empty lines (more than one consecutive empty line)
 
+  
+
 ## Getting Started
+
+  
 
 The extension is available [the marketplace](https://marketplace.visualstudio.com/items?itemName=Mybiblipi.EmptyLineExtention) or directly in Visual studio in *Tools => Extension and Update*
 
+  
+
 ## How to use it ?
 
+  
+
 ### Manual
+
+  
 
 Once the extension is installed, a "Remove empty lines" option is available when right clicking in a file.
 
   
+
 ![Image](https://i.goopics.net/3qgW8.png)
+
+  
 
 If there is some selected text, the selection will be the only part of the document that will be processed.
 
+  
+
 ### Automatic
 
+  
+
 There is now an option in Visual Studio for auto-reformat the code:
+
 you can fint it in *Tools => Options => EmptyLine Extension*
 
+  
+### Configurations
+
+With the version 1.1.0, you can edit the number of allowed lines, for that go on "*Tools => Options => EmptyLine Extension*", and edit the option "Allowed lines", by default there is no values, in this case, 1 line is kept, if you didn't want any line, then set value to 0. All numbers are allowed for this option.
+  
 
 ### Prerequisites
+
+  
 
 The extension is only available Visual Studio 2017.
