@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Design;
+using EmptyLineExtention.Core.Settings;
 using EmptyLineExtention.Services;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
@@ -89,7 +90,30 @@ namespace EmptyLineExtention.Commands
         {
             // Get the current Doc
             EnvDTE80.DTE2 applicationObject = ServiceProvider.GetService(typeof(DTE)) as EnvDTE80.DTE2;
-            EmptyLineService.FormatDocument(applicationObject.ActiveDocument, true);
+
+            EmptyLineService.FormatDocument(applicationObject.ActiveDocument, true, GetAllowedLinesValue());
+        }
+
+        /// <summary>
+        /// Get the value of AllowedLines property
+        /// </summary>
+        /// <returns></returns>
+        private int GetAllowedLinesValue()
+        {
+            OptionPage optionProperties = null;
+            try
+            {
+                optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+            }
+            catch (Exception)
+            {
+                return Core.Constants.DefaultAllowedLines;
+            }
+
+            if (optionProperties == null)
+                return Core.Constants.DefaultAllowedLines;
+
+            return optionProperties.DefaultAllowedLines;
         }
     }
 }

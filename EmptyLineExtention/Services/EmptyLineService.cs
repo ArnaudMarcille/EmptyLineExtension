@@ -4,7 +4,7 @@ namespace EmptyLineExtention.Services
 {
     public class EmptyLineService
     {
-        public static void FormatDocument(Document document, bool CanUseSelection)
+        public static void FormatDocument(Document document, bool CanUseSelection, int AllowedLines)
         {
             // Get the current Doc
             TextDocument activeDoc = document.Object() as TextDocument;
@@ -25,7 +25,7 @@ namespace EmptyLineExtention.Services
             }
 
             // remove all multiple space between start and end point
-            bool isLastLineEmpty = false;
+            int numberOfEmptyLines = 0;
             for (int number = startPoint; number <= endPoint; number++)
             {
                 bool lineDeleted = false;
@@ -33,11 +33,9 @@ namespace EmptyLineExtention.Services
                 editPoint.CreateEditPoint();
                 if (string.IsNullOrWhiteSpace(line))
                 {
-                    if (!isLastLineEmpty)
-                    {
-                        isLastLineEmpty = true;
-                    }
-                    else
+                    numberOfEmptyLines++;
+
+                    if (numberOfEmptyLines > AllowedLines)
                     {
                         editPoint.Delete(-1);
                         lineDeleted = true;
@@ -49,7 +47,7 @@ namespace EmptyLineExtention.Services
                 }
                 else
                 {
-                    isLastLineEmpty = false;
+                    numberOfEmptyLines = 0;
                 }
 
                 if (lineDeleted)

@@ -17,6 +17,11 @@ namespace EmptyLineExtention.Core.Controls
         private bool autoSaveEnabled;
 
         /// <summary>
+        /// Allowed lines number
+        /// </summary>
+        private int? allowedLines;
+
+        /// <summary>
         /// Option page instance
         /// </summary>
         internal OptionPage optionsPage;
@@ -34,6 +39,16 @@ namespace EmptyLineExtention.Core.Controls
         /// Auto save content translation
         /// </summary>
         public string AutoSaveContent { get { return Labels.SettingsControl_AutoFormat_Content; } }
+
+        /// <summary>
+        /// Allowed lines translation
+        /// </summary>
+        public string AllowedLinesContent { get { return Labels.SettingsControl_AllowedLines; } }
+
+        /// <summary>
+        /// Allowed lines description
+        /// </summary>
+        public string AllowedLinesDesc { get { return Labels.SettingsControl_AllowedLinesDesc; } }
 
         #endregion
 
@@ -55,6 +70,26 @@ namespace EmptyLineExtention.Core.Controls
             }
         }
 
+        /// <summary>
+        ///  Option page instance
+        /// </summary>
+        public string AllowedLines
+        {
+            get { return allowedLines.HasValue ? allowedLines.ToString() : string.Empty; }
+            set
+            {
+                int formatedValue;
+                if (int.TryParse(value, out formatedValue))
+                {
+                    allowedLines = formatedValue;
+                }
+                else
+                {
+                    allowedLines = null;
+                }
+                optionsPage.AllowedLines = allowedLines;
+            }
+        }
 
         #endregion
 
@@ -67,11 +102,27 @@ namespace EmptyLineExtention.Core.Controls
         {
             this.optionsPage = optionsPage;
             autoSaveEnabled = optionsPage.IsAutoSaveEnabled;
+            allowedLines = optionsPage.AllowedLines;
+
             InitializeComponent();
             this.DataContext = this;
         }
 
         #endregion
 
+        #region Events
+
+        /// <summary>
+        /// Event for allow numeric values only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbx_NumericValue_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            int value;
+            e.Handled = !int.TryParse(e.Text, out value);
+        }
+
+        #endregion
     }
 }

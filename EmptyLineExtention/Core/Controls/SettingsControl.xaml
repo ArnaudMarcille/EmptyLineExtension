@@ -8,9 +8,18 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <GroupBox Padding="5,10,5,5" Header="{Binding HeaderName}">
-            <CheckBox
-                IsChecked="{Binding AutoSaveEnabled}"
-                Content="{Binding AutoSaveContent}" />
+            <StackPanel>
+                <CheckBox IsChecked="{Binding AutoSaveEnabled}"
+                          Content="{Binding AutoSaveContent}" Margin="0,0,0,5"/>
+                <Separator />
+                <TextBlock Text="{Binding AllowedLinesContent}" Margin="0,5,0,5"/>
+                <TextBox Text="{Binding AllowedLines, UpdateSourceTrigger=PropertyChanged}" Name="tbx_NumericValue" PreviewTextInput="tbx_NumericValue_PreviewTextInput" />
+                <TextBlock Text="{Binding AllowedLinesDesc}"
+                           TextWrapping="Wrap"
+                           Margin="0,5,0,5"/>
+
+            </StackPanel>
+            
         </GroupBox>
     </Grid>
 </UserControl>

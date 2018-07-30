@@ -14,6 +14,11 @@ namespace EmptyLineExtention.Core.Settings
         /// </summary>
         private bool isAutoSaveEnabled;
 
+        /// <summary>
+        /// Minimum line to remove
+        /// </summary>
+        private int? allowedLines;
+
         #endregion
 
         #region Properties
@@ -25,6 +30,20 @@ namespace EmptyLineExtention.Core.Settings
         {
             get { return isAutoSaveEnabled; }
             set { isAutoSaveEnabled = value; }
+        }
+
+        [Category(Constants.AppName)]
+        [DisplayName(Constants.AllowedLines)]
+        [Description(Constants.AllowedLinesDesc)]
+        public int? AllowedLines
+        {
+            get { return allowedLines; }
+            set { allowedLines = value; }
+        }
+
+        public int DefaultAllowedLines
+        {
+            get { return allowedLines.HasValue ? allowedLines.Value : Core.Constants.DefaultAllowedLines; }
         }
 
         protected override UIElement Child

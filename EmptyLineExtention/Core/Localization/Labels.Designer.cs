@@ -61,6 +61,24 @@ namespace EmptyLineExtention.Core.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allowed lines (default is 1) :.
+        /// </summary>
+        internal static string SettingsControl_AllowedLines {
+            get {
+                return ResourceManager.GetString("SettingsControl_AllowedLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn&apos;t set any value, the default value will be taken..
+        /// </summary>
+        internal static string SettingsControl_AllowedLinesDesc {
+            get {
+                return ResourceManager.GetString("SettingsControl_AllowedLinesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable auto format on document save..
         /// </summary>
         internal static string SettingsControl_AutoFormat_Content {
