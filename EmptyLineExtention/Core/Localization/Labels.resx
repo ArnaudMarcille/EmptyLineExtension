@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsControl_AllowedLines" xml:space="preserve">
-    <value>Allowed lines :</value>
+    <value>Allowed lines (default is 1) :</value>
+  </data>
+  <data name="SettingsControl_AllowedLinesDesc" xml:space="preserve">
+    <value>Here you can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn't set any value, the default value will be taken.</value>
   </data>
   <data name="SettingsControl_AutoFormat_Content" xml:space="preserve">
     <value>Enable auto format on document save.</value>

@@ -45,6 +45,11 @@ namespace EmptyLineExtention.Core.Controls
         /// </summary>
         public string AllowedLinesContent { get { return Labels.SettingsControl_AllowedLines; } }
 
+        /// <summary>
+        /// Allowed lines description
+        /// </summary>
+        public string AllowedLinesDesc { get { return Labels.SettingsControl_AllowedLinesDesc; } }
+
         #endregion
 
         #region Properties

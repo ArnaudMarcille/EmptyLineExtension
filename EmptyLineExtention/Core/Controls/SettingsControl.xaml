@@ -12,8 +12,12 @@
                 <CheckBox IsChecked="{Binding AutoSaveEnabled}"
                           Content="{Binding AutoSaveContent}" Margin="0,0,0,5"/>
                 <Separator />
-                <Label Content="{Binding AllowedLinesContent}" Margin="0,5,0,5"/>
+                <TextBlock Text="{Binding AllowedLinesContent}" Margin="0,5,0,5"/>
                 <TextBox Text="{Binding AllowedLines, UpdateSourceTrigger=PropertyChanged}" Name="tbx_NumericValue" PreviewTextInput="tbx_NumericValue_PreviewTextInput" />
+                <TextBlock Text="{Binding AllowedLinesDesc}"
+                           TextWrapping="Wrap"
+                           Margin="0,5,0,5"/>
+
             </StackPanel>
             
         </GroupBox>
