@@ -37,7 +37,8 @@ namespace EmptyLineExtention.Services
 
                     if (numberOfEmptyLines > AllowedLines)
                     {
-                        editPoint.Delete(-1);
+                        editPoint.StartOfLine();
+                        editPoint.Delete((editPoint.LineLength + 1) * -1);
                         lineDeleted = true;
                         if (!activeDoc.Selection.IsEmpty)
                             endPoint = activeDoc.Selection.BottomLine;
