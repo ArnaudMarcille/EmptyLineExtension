@@ -124,10 +124,15 @@ namespace EmptyLineExtention.Formatter
         /// <returns></returns>
         private Document FindDocument(uint docCookie)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var documentInfo = runningDocumentTable.GetDocumentInfo(docCookie);
             var documentPath = documentInfo.Moniker;
 
-            return dte.Documents.Cast<Document>().FirstOrDefault(doc => doc.FullName == documentPath);
+            return dte.Documents.Cast<Document>().FirstOrDefault(doc => 
+            {
+                Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+                return doc.FullName == documentPath;
+            });
         }
 
         /// <summary>
