@@ -49,9 +49,13 @@ namespace EmptyLineExtention.Services
                     if (numberOfEmptyLines > AllowedLines)
                     {
                         editPoint.StartOfLine();
-                        editPoint.Delete((line.Length));
+                        // Delete "spaces"
+                        editPoint.Delete(line.Length);
+                        // Delete breakline
                         editPoint.Delete(-1);
+
                         lineDeleted = true;
+
                         if (!activeDoc.Selection.IsEmpty)
                             endPoint = activeDoc.Selection.BottomLine;
                         else
