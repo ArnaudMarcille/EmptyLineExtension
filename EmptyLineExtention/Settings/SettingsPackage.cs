@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using EmptyLineExtention.Core.Settings;
 using Microsoft.VisualStudio.Shell;
 
@@ -22,11 +24,11 @@ namespace EmptyLineExtention.Settings
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
-    [PackageRegistration(UseManagedResourcesOnly = true)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#1110", "#1112", "1.0", IconResourceID = 1400)] // Info on this package for Help/About
     [ProvideOptionPage(typeof(OptionPage), Core.Constants.AppName, Core.Constants.SettingsPageName, 0, 0, true)]
     [Guid(SettingsPackage.PackageGuidString)]
-    public sealed class SettingsPackage : Package
+    public sealed class SettingsPackage : AsyncPackage
     {
         /// <summary>
         /// SettingsPackage GUID string.
@@ -66,9 +68,9 @@ namespace EmptyLineExtention.Settings
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
         /// where you can put all the initialization code that rely on services provided by VisualStudio.
         /// </summary>
-        protected override void Initialize()
+        protected override System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            base.Initialize();
+            return base.InitializeAsync(cancellationToken, progress);
         }
 
         #endregion
