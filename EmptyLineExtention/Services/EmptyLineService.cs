@@ -2,10 +2,21 @@
 
 namespace EmptyLineExtention.Services
 {
+    /// <summary>
+    /// Empty line methods
+    /// </summary>
     public class EmptyLineService
     {
+        /// <summary>
+        /// Format document for remove empty line 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="CanUseSelection"></param>
+        /// <param name="AllowedLines"></param>
         public static void FormatDocument(Document document, bool CanUseSelection, int AllowedLines)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
             // Get the current Doc
             TextDocument activeDoc = document.Object() as TextDocument;
 
@@ -38,8 +49,13 @@ namespace EmptyLineExtention.Services
                     if (numberOfEmptyLines > AllowedLines)
                     {
                         editPoint.StartOfLine();
-                        editPoint.Delete((editPoint.LineLength + 1) * -1);
+                        // Delete "spaces"
+                        editPoint.Delete(line.Length);
+                        // Delete breakline
+                        editPoint.Delete(-1);
+
                         lineDeleted = true;
+
                         if (!activeDoc.Selection.IsEmpty)
                             endPoint = activeDoc.Selection.BottomLine;
                         else

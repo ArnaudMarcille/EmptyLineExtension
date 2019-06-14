@@ -1,9 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using EmptyLineExtention.Core.Settings;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Task = System.Threading.Tasks.Task;
 
 namespace EmptyLineExtention.Formatter
 {
@@ -24,14 +27,14 @@ namespace EmptyLineExtention.Formatter
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
-    [PackageRegistration(UseManagedResourcesOnly = true)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#2110", "#2112", "1.0", IconResourceID = 2400)] // Info on this package for Help/About
     [Guid(AutoFormatPackage.PackageGuidString)]
-    [ProvideAutoLoad(UIContextGuids80.NoSolution)]
-    [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
-    [ProvideAutoLoad(UIContextGuids80.SolutionHasSingleProject)]
-    [ProvideAutoLoad(UIContextGuids80.SolutionHasMultipleProjects)]
-    public sealed class AutoFormatPackage : Package
+    [ProvideAutoLoad(UIContextGuids80.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionHasSingleProject, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionHasMultipleProjects, PackageAutoLoadFlags.BackgroundLoad)]
+    public sealed class AutoFormatPackage : AsyncPackage
     {
         /// <summary>
         /// Auto formatter instance
@@ -68,19 +71,19 @@ namespace EmptyLineExtention.Formatter
 
         #region Package Members
 
-        /// <summary>
-        /// Initialization of the package; this method is called right after the package is sited, so this is the place
-        /// where you can put all the initialization code that rely on services provided by VisualStudio.
-        /// </summary>
-        protected override void Initialize()
+        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            var dte = (DTE)GetService(typeof(DTE));
-            var runningDocumentTable = new RunningDocumentTable(this);
+            // Switches to the UI thread in order to consume some services used in command initialization
+            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+
+            var dte = await GetServiceAsync(typeof(DTE)) as DTE;
+            RunningDocumentTable runningDocumentTable = new RunningDocumentTable();
             plugin = new AutoFormatter(dte, runningDocumentTable, this);
             runningDocumentTable.Advise(plugin);
 
             base.Initialize();
         }
+       
 
         #endregion
     }
