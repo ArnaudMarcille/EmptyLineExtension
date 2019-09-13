@@ -1,4 +1,5 @@
-﻿using EnvDTE;
+﻿using EmptyLineExtention.Core.Localization;
+using EnvDTE;
 
 namespace EmptyLineExtention.Services
 {
@@ -13,67 +14,75 @@ namespace EmptyLineExtention.Services
         /// <param name="document"></param>
         /// <param name="CanUseSelection"></param>
         /// <param name="AllowedLines"></param>
-        public static void FormatDocument(Document document, bool CanUseSelection, int AllowedLines)
+        public static void FormatDocument(Document document, bool CanUseSelection, int AllowedLines, _DTE dte)
         {
             Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
             // Get the current Doc
             TextDocument activeDoc = document.Object() as TextDocument;
 
-            // set default start point
-            int startPoint = 1;
-            int endPoint = activeDoc.EndPoint.Line;
-
-            // initialise edit point
-            var editPoint = activeDoc.CreateEditPoint(activeDoc.StartPoint);
-
-            // check if there is a selection
-            if (!activeDoc.Selection.IsEmpty && CanUseSelection)
+            try
             {
-                startPoint = activeDoc.Selection.TopLine;
-                endPoint = activeDoc.Selection.BottomLine;
-                editPoint.LineDown(startPoint - 1);
-            }
+                // open undo context
+                dte.UndoContext.Open(Labels.Undo_Removed);
+                // set default start point
+                int startPoint = 1;
+                int endPoint = activeDoc.EndPoint.Line;
+                // initialise edit point
+                var editPoint = activeDoc.CreateEditPoint(activeDoc.StartPoint);
 
-            // remove all multiple space between start and end point
-            int numberOfEmptyLines = 0;
-            for (int number = startPoint; number <= endPoint; number++)
-            {
-                bool lineDeleted = false;
-                string line = editPoint.GetLines(number, number + 1);
-                editPoint.CreateEditPoint();
-                if (string.IsNullOrWhiteSpace(line))
+                // check if there is a selection
+                if (!activeDoc.Selection.IsEmpty && CanUseSelection)
                 {
-                    numberOfEmptyLines++;
+                    startPoint = activeDoc.Selection.TopLine;
+                    endPoint = activeDoc.Selection.BottomLine;
+                    editPoint.LineDown(startPoint - 1);
+                }
 
-                    if (numberOfEmptyLines > AllowedLines)
+                // remove all multiple space between start and end point
+                int numberOfEmptyLines = 0;
+                for (int number = startPoint; number <= endPoint; number++)
+                {
+                    bool lineDeleted = false;
+                    string line = editPoint.GetLines(number, number + 1);
+                    editPoint.CreateEditPoint();
+                    if (string.IsNullOrWhiteSpace(line))
                     {
-                        editPoint.StartOfLine();
-                        // Delete "spaces"
-                        editPoint.Delete(line.Length);
-                        // Delete breakline
-                        editPoint.Delete(-1);
+                        numberOfEmptyLines++;
 
-                        lineDeleted = true;
+                        if (numberOfEmptyLines > AllowedLines)
+                        {
+                            editPoint.StartOfLine();
+                            // Delete "spaces"
+                            editPoint.Delete(line.Length);
+                            // Delete breakline
+                            editPoint.Delete(-1);
 
-                        if (!activeDoc.Selection.IsEmpty)
-                            endPoint = activeDoc.Selection.BottomLine;
-                        else
-                            endPoint = activeDoc.EndPoint.Line;
+                            lineDeleted = true;
+
+                            if (!activeDoc.Selection.IsEmpty)
+                                endPoint = activeDoc.Selection.BottomLine;
+                            else
+                                endPoint = activeDoc.EndPoint.Line;
+                        }
                     }
-                }
-                else
-                {
-                    numberOfEmptyLines = 0;
-                }
+                    else
+                    {
+                        numberOfEmptyLines = 0;
+                    }
 
-                if (lineDeleted)
-                {
-                    number--;
+                    if (lineDeleted)
+                    {
+                        number--;
+                    }
+                    editPoint.LineDown(1);
                 }
-                editPoint.LineDown(1);
+            }
+            finally
+            {
+                // close undo context
+                dte.UndoContext.Close();
             }
         }
-
     }
 }

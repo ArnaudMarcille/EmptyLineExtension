@@ -65,7 +65,7 @@ namespace EmptyLineExtention.Formatter
 
             if (GetAutoSavePropertyValue())
             {
-                EmptyLineService.FormatDocument(document, false, GetAllowedLinesValue());
+                EmptyLineService.FormatDocument(document, false, GetAllowedLinesValue(), dte);
             }
 
             return VSConstants.S_OK;
@@ -128,7 +128,7 @@ namespace EmptyLineExtention.Formatter
             var documentInfo = runningDocumentTable.GetDocumentInfo(docCookie);
             var documentPath = documentInfo.Moniker;
 
-            return dte.Documents.Cast<Document>().FirstOrDefault(doc => 
+            return dte.Documents.Cast<Document>().FirstOrDefault(doc =>
             {
                 Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
                 return doc.FullName == documentPath;
