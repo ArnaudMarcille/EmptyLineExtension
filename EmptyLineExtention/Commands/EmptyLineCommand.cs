@@ -91,7 +91,7 @@ namespace EmptyLineExtention.Commands
             // Get the current Doc
             EnvDTE80.DTE2 applicationObject = ServiceProvider.GetService(typeof(DTE)) as EnvDTE80.DTE2;
 
-            EmptyLineService.FormatDocument(applicationObject.ActiveDocument, true, GetAllowedLinesValue());
+            EmptyLineService.FormatDocument(applicationObject.ActiveDocument, true, GetAllowedLinesValue(), applicationObject);
         }
 
         /// <summary>

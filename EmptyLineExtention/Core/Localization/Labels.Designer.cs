@@ -95,5 +95,14 @@ namespace EmptyLineExtention.Core.Localization {
                 return ResourceManager.GetString("SettingsControl_Header", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove empty lines.
+        /// </summary>
+        internal static string Undo_Removed {
+            get {
+                return ResourceManager.GetString("Undo_Removed", resourceCulture);
+            }
+        }
     }
 }

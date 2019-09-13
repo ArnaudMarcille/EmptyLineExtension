@@ -129,4 +129,7 @@
   <data name="SettingsControl_Header" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="Undo_Removed" xml:space="preserve">
+    <value>Remove empty lines</value>
+  </data>
 </root>
