@@ -53,4 +53,4 @@ With the version 1.1.0, you can edit the number of allowed lines, for that go on
 
   
 
-The extension is only available Visual Studio 2017.
+The extension is only available Visual Studio 2017 and 2019.
