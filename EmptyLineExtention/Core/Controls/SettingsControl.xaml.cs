@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using EmptyLineExtention.Core.Localization;
 using EmptyLineExtention.Core.Settings;
 
@@ -25,6 +28,11 @@ namespace EmptyLineExtention.Core.Controls
         /// Option page instance
         /// </summary>
         internal OptionPage optionsPage;
+
+        /// <summary>
+        /// List settings item
+        /// </summary>
+        private ObservableCollection<SettingItem> settingsItems = new ObservableCollection<SettingItem>();
 
         #endregion
 
@@ -100,11 +108,19 @@ namespace EmptyLineExtention.Core.Controls
         /// </summary>
         public SettingsControl(OptionPage optionsPage)
         {
+            InitializeComponent();
+            foreach (var item in optionsPage.GetSettingItems())
+            {
+                settingsItems.Add(item);
+            }
+
             this.optionsPage = optionsPage;
             autoSaveEnabled = optionsPage.IsAutoSaveEnabled;
             allowedLines = optionsPage.AllowedLines;
+            SettingsGrid.ItemsSource = settingsItems;
+            SettingsGrid.AutoGenerateColumns = false;
+            SettingsGrid.CanUserAddRows = true;
 
-            InitializeComponent();
             this.DataContext = this;
         }
 
@@ -124,5 +140,10 @@ namespace EmptyLineExtention.Core.Controls
         }
 
         #endregion
+
+        private void btn_Apply_Click(object sender, RoutedEventArgs e)
+        {
+            optionsPage.SetSettingItems(settingsItems.ToList());
+        }
     }
 }

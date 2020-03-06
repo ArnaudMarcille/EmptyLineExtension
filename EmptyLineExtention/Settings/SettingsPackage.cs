@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using EmptyLineExtention.Core.Settings;
 using Microsoft.VisualStudio.Shell;
 
