@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using EmptyLineExtention.Core.Settings;
 using EmptyLineExtention.Services;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
+using Newtonsoft.Json;
 
 namespace EmptyLineExtention.Commands
 {
@@ -88,17 +90,28 @@ namespace EmptyLineExtention.Commands
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs e)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             // Get the current Doc
             EnvDTE80.DTE2 applicationObject = ServiceProvider.GetService(typeof(DTE)) as EnvDTE80.DTE2;
 
-            EmptyLineService.FormatDocument(applicationObject.ActiveDocument, true, GetAllowedLinesValue(), applicationObject);
+            if (applicationObject == null)
+            {
+                return;
+            }
+
+            int? allowedLines = GetAllowedLinesValue(applicationObject.ActiveDocument);
+            if (allowedLines.HasValue)
+            {
+                EmptyLineService.FormatDocument(applicationObject.ActiveDocument, true, allowedLines.Value, applicationObject);
+            }
         }
 
         /// <summary>
         /// Get the value of AllowedLines property
         /// </summary>
         /// <returns></returns>
-        private int GetAllowedLinesValue()
+        private int? GetAllowedLinesValue(Document document)
         {
             OptionPage optionProperties = null;
             try
@@ -107,13 +120,23 @@ namespace EmptyLineExtention.Commands
             }
             catch (Exception)
             {
-                return Core.Constants.DefaultAllowedLines;
+                return null;
             }
 
-            if (optionProperties == null)
-                return Core.Constants.DefaultAllowedLines;
+            int? allowedLines = null;
 
-            return optionProperties.DefaultAllowedLines;
+            if (!string.IsNullOrEmpty(optionProperties?.FilesConfigurations))
+            {
+                List<SettingItem> items = JsonConvert.DeserializeObject<List<SettingItem>>(optionProperties.FilesConfigurations);
+                var result = RegexService.FindAllowedLinesForDocument(document.FullName, items);
+
+                if (result != null)
+                {
+                    allowedLines = result.Value;
+                }
+            }
+
+            return allowedLines;
         }
     }
 }

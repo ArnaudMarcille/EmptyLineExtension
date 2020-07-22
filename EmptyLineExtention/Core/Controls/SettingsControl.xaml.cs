@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -111,6 +113,7 @@ namespace EmptyLineExtention.Core.Controls
             InitializeComponent();
             foreach (var item in optionsPage.GetSettingItems())
             {
+                item.PropertyUpdated += OnPropertyUpdated;
                 settingsItems.Add(item);
             }
 
@@ -122,11 +125,39 @@ namespace EmptyLineExtention.Core.Controls
             SettingsGrid.CanUserAddRows = true;
 
             this.DataContext = this;
+
+            settingsItems.CollectionChanged += OnSettingsListUpdated;
         }
 
         #endregion
 
         #region Events
+
+        private void OnSettingsListUpdated(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    (item as SettingItem).PropertyUpdated += OnPropertyUpdated;
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (var item in e.OldItems)
+                {
+                    (item as SettingItem).PropertyUpdated -= OnPropertyUpdated;
+                }
+            }
+
+            SaveState();
+        }
+
+        private void OnPropertyUpdated(object sender, EventArgs e)
+        {
+            SaveState();
+        }
 
         /// <summary>
         /// Event for allow numeric values only
@@ -142,6 +173,16 @@ namespace EmptyLineExtention.Core.Controls
         #endregion
 
         private void btn_Apply_Click(object sender, RoutedEventArgs e)
+        {
+            SaveState();
+        }
+
+        private void UserControl_LostFocus(object sender, RoutedEventArgs e)
+        {
+            SaveState();
+        }
+
+        private void SaveState()
         {
             optionsPage.SetSettingItems(settingsItems.ToList());
         }

@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="300"
     d:DesignWidth="300"
+    LostFocus="UserControl_LostFocus"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -30,10 +31,22 @@
                         Margin="0,5,0,5"
                         Text="{Binding AllowedLinesDesc}"
                         TextWrapping="Wrap" />
-                    <DataGrid x:Name="SettingsGrid" Grid.Row="1">
+                    <DataGrid
+                        x:Name="SettingsGrid"
+                        Grid.Row="1"
+                        CanUserResizeRows="False"
+                        CanUserSortColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Key}" Header="Key" />
-                            <DataGridTextColumn Binding="{Binding Value}" Header="Value" />
+                            <DataGridTextColumn
+                                Width="60*"
+                                Binding="{Binding Key}"
+                                CanUserSort="False"
+                                Header="Key" />
+                            <DataGridTextColumn
+                                Width="auto"
+                                Binding="{Binding Value}"
+                                CanUserSort="False"
+                                Header="Value" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EmptyLineExtention.Core.Settings;
 using EmptyLineExtention.Services;
@@ -6,6 +7,7 @@ using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Newtonsoft.Json;
 
 namespace EmptyLineExtention.Formatter
 {
@@ -65,7 +67,11 @@ namespace EmptyLineExtention.Formatter
 
             if (GetAutoSavePropertyValue())
             {
-                EmptyLineService.FormatDocument(document, false, GetAllowedLinesValue(), dte);
+                int? allowedLines = GetAllowedLinesValue(document);
+                if (allowedLines.HasValue)
+                {
+                    EmptyLineService.FormatDocument(document, false, allowedLines.Value, dte);
+                }
             }
 
             return VSConstants.S_OK;
@@ -161,7 +167,7 @@ namespace EmptyLineExtention.Formatter
         /// Get the value of AllowedLines property
         /// </summary>
         /// <returns></returns>
-        private int GetAllowedLinesValue()
+        private int? GetAllowedLinesValue(Document document)
         {
             OptionPage optionProperties = null;
             try
@@ -170,13 +176,23 @@ namespace EmptyLineExtention.Formatter
             }
             catch (Exception)
             {
-                return Core.Constants.DefaultAllowedLines;
+                return null;
             }
 
-            if (optionProperties == null)
-                return Core.Constants.DefaultAllowedLines;
+            int? allowedLines = null;
 
-            return optionProperties.DefaultAllowedLines;
+            if (!string.IsNullOrEmpty(optionProperties?.FilesConfigurations))
+            {
+                List<SettingItem> items = JsonConvert.DeserializeObject<List<SettingItem>>(optionProperties.FilesConfigurations);
+                var result = RegexService.FindAllowedLinesForDocument(document.FullName, items);
+
+                if (result != null)
+                {
+                    allowedLines = result.Value;
+                }
+            }
+
+            return allowedLines;
         }
 
         #endregion

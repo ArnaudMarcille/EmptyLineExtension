@@ -1,9 +1,34 @@
-﻿namespace EmptyLineExtention.Core.Settings
+﻿using System;
+
+namespace EmptyLineExtention.Core.Settings
 {
     public class SettingItem
     {
-        public string Key { get; set; }
+        public event EventHandler PropertyUpdated;
 
-        public int Value { get; set; }
+        private string key;
+
+        public string Key
+        {
+            get { return key; }
+            set
+            {
+                key = value;
+                PropertyUpdated?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private int value;
+
+        public int Value
+        {
+            get { return value; }
+            set
+            {
+                this.value = value;
+                PropertyUpdated?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
     }
 }

@@ -26,12 +26,16 @@ namespace EmptyLineExtention.Services
 
             while (i < settingItems.Count)
             {
-                Regex regex = new Regex(settingItems[i].Key);
-
-                if (regex.IsMatch(documentFullName))
+                try
                 {
-                    compatibleItem = settingItems[i];
+                    Regex regex = new Regex(settingItems[i].Key);
+
+                    if (regex.IsMatch(documentFullName))
+                    {
+                        compatibleItem = settingItems[i];
+                    }
                 }
+                catch { }
                 i++;
             }
 
