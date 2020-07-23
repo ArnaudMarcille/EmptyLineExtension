@@ -65,9 +65,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
-    <Compile Include="Core\Settings\ConfigurationOptionPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Core\Settings\OptionPage.cs">
       <SubType>Component</SubType>
     </Compile>
