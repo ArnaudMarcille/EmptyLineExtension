@@ -130,17 +130,11 @@ Below, you can set the regex requests for your specific cases, if there is multi
   <data name="SettingsControl_AutoFormat_Content" xml:space="preserve">
     <value>Enable auto format on document save.</value>
   </data>
-  <data name="SettingsControl_DownLabel" xml:space="preserve">
-    <value>Down</value>
-  </data>
   <data name="SettingsControl_Header" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="SettingsControl_RegexLabel" xml:space="preserve">
     <value>Regex</value>
-  </data>
-  <data name="SettingsControl_UpLabel" xml:space="preserve">
-    <value>Up</value>
   </data>
   <data name="SettingsControl_ValueLabel" xml:space="preserve">
     <value>Allowed lines</value>

@@ -98,15 +98,6 @@ namespace EmptyLineExtention.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Down.
-        /// </summary>
-        internal static string SettingsControl_DownLabel {
-            get {
-                return ResourceManager.GetString("SettingsControl_DownLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string SettingsControl_Header {
@@ -121,15 +112,6 @@ namespace EmptyLineExtention.Core.Localization {
         internal static string SettingsControl_RegexLabel {
             get {
                 return ResourceManager.GetString("SettingsControl_RegexLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Up.
-        /// </summary>
-        internal static string SettingsControl_UpLabel {
-            get {
-                return ResourceManager.GetString("SettingsControl_UpLabel", resourceCulture);
             }
         }
         

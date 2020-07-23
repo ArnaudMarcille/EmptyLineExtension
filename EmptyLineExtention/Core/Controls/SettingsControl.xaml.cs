@@ -61,16 +61,6 @@ namespace EmptyLineExtention.Core.Controls
         public string AllowedLinesDesc { get { return Labels.SettingsControl_AllowedLinesDesc; } }
 
         /// <summary>
-        /// UpLabel
-        /// </summary>
-        public string UpLabel { get { return Labels.SettingsControl_UpLabel; } }
-
-        /// <summary>
-        /// DownLabel
-        /// </summary>
-        public string DownLabel { get { return Labels.SettingsControl_DownLabel; } }
-
-        /// <summary>
         /// ApplyLabel
         /// </summary>
         public string ApplyLabel { get { return Labels.SettingsControl_ApplyLabel; } }
@@ -129,6 +119,7 @@ namespace EmptyLineExtention.Core.Controls
             foreach (var item in optionsPage.GetSettingItems())
             {
                 item.PropertyUpdated += OnPropertyUpdated;
+                item.ItemMoved += OnItemMoved;
                 settingsItems.Add(item);
             }
 
@@ -163,6 +154,7 @@ namespace EmptyLineExtention.Core.Controls
                 foreach (var item in e.NewItems)
                 {
                     (item as SettingItem).PropertyUpdated += OnPropertyUpdated;
+                    (item as SettingItem).ItemMoved += OnItemMoved;
                 }
             }
 
@@ -171,6 +163,7 @@ namespace EmptyLineExtention.Core.Controls
                 foreach (var item in e.OldItems)
                 {
                     (item as SettingItem).PropertyUpdated -= OnPropertyUpdated;
+                    (item as SettingItem).ItemMoved -= OnItemMoved;
                 }
             }
 
@@ -199,38 +192,6 @@ namespace EmptyLineExtention.Core.Controls
         }
 
         /// <summary>
-        /// On up click
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_Up_Click(object sender, RoutedEventArgs e)
-        {
-            if (SettingsGrid.SelectedIndex <= 0)
-            {
-                return;
-            }
-
-            settingsItems.Move(SettingsGrid.SelectedIndex, SettingsGrid.SelectedIndex - 1);
-            SaveState();
-        }
-
-        /// <summary>
-        /// On down click
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_Down_Click(object sender, RoutedEventArgs e)
-        {
-            if (SettingsGrid.SelectedIndex < 0 || SettingsGrid.SelectedIndex >= (settingsItems.Count - 1))
-            {
-                return;
-            }
-
-            settingsItems.Move(SettingsGrid.SelectedIndex, SettingsGrid.SelectedIndex + 1);
-            SaveState();
-        }
-
-        /// <summary>
         /// Apply : save current state
         /// </summary>
         /// <param name="sender"></param>
@@ -247,6 +208,33 @@ namespace EmptyLineExtention.Core.Controls
         /// <param name="e"></param>
         private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
+            SaveState();
+        }
+
+        /// <summary>
+        /// Onitem moved
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnItemMoved(object sender, MoveEventArgs e)
+        {
+            var item = sender as SettingItem;
+            if (item == null)
+            {
+                return;
+            }
+
+            int index = settingsItems.IndexOf(item);
+
+            if (e.moveAction == MoveEnum.Up && index > 0)
+            {
+                settingsItems.Move(index, index - 1);
+            }
+            else if (e.moveAction == MoveEnum.Down && SettingsGrid.SelectedIndex < (settingsItems.Count - 1))
+            {
+                settingsItems.Move(index, index + 1);
+            }
+
             SaveState();
         }
 

@@ -65,6 +65,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
+    <Compile Include="Core\Settings\Command.cs" />
+    <Compile Include="Core\Settings\MoveEnum.cs" />
+    <Compile Include="Core\Settings\MoveEventArgs.cs" />
     <Compile Include="Core\Settings\OptionPage.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -92,7 +95,6 @@
     <Content Include="Commands\Resources\EmptyLineCommand.png" />
     <Content Include="Commands\Resources\EmptyLineCommandPackage.ico" />
     <Content Include="Formatter\Resources\AutoFormatPackage.ico" />
-    <Content Include="index.html" />
     <Content Include="Settings\Resources\SettingsPackage.ico" />
     <Content Include="stylesheet.css" />
   </ItemGroup>
