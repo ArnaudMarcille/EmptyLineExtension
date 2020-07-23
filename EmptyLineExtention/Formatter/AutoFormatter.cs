@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using EmptyLineExtention.Core.Settings;
 using EmptyLineExtention.Services;
@@ -7,7 +6,6 @@ using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using Newtonsoft.Json;
 
 namespace EmptyLineExtention.Formatter
 {
@@ -60,6 +58,7 @@ namespace EmptyLineExtention.Formatter
         /// <returns></returns>
         public int OnBeforeSave(uint docCookie)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var document = FindDocument(docCookie);
 
             if (document == null)
@@ -169,30 +168,16 @@ namespace EmptyLineExtention.Formatter
         /// <returns></returns>
         private int? GetAllowedLinesValue(Document document)
         {
-            OptionPage optionProperties = null;
             try
             {
-                optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+                ThreadHelper.ThrowIfNotOnUIThread();
+                OptionPage optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+                return EmptyLineService.ComputeAllowedLines(document.FullName, optionProperties);
             }
             catch (Exception)
             {
                 return null;
             }
-
-            int? allowedLines = null;
-
-            if (!string.IsNullOrEmpty(optionProperties?.FilesConfigurations))
-            {
-                List<SettingItem> items = JsonConvert.DeserializeObject<List<SettingItem>>(optionProperties.FilesConfigurations);
-                var result = RegexService.FindAllowedLinesForDocument(document.FullName, items);
-
-                if (result != null)
-                {
-                    allowedLines = result.Value;
-                }
-            }
-
-            return allowedLines;
         }
 
         #endregion

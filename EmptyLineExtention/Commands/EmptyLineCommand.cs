@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
 using EmptyLineExtention.Core.Settings;
 using EmptyLineExtention.Services;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
-using Newtonsoft.Json;
 
 namespace EmptyLineExtention.Commands
 {
@@ -113,30 +111,16 @@ namespace EmptyLineExtention.Commands
         /// <returns></returns>
         private int? GetAllowedLinesValue(Document document)
         {
-            OptionPage optionProperties = null;
             try
             {
-                optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+                ThreadHelper.ThrowIfNotOnUIThread();
+                OptionPage optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+                return EmptyLineService.ComputeAllowedLines(document.FullName, optionProperties);
             }
             catch (Exception)
             {
                 return null;
             }
-
-            int? allowedLines = null;
-
-            if (!string.IsNullOrEmpty(optionProperties?.FilesConfigurations))
-            {
-                List<SettingItem> items = JsonConvert.DeserializeObject<List<SettingItem>>(optionProperties.FilesConfigurations);
-                var result = RegexService.FindAllowedLinesForDocument(document.FullName, items);
-
-                if (result != null)
-                {
-                    allowedLines = result.Value;
-                }
-            }
-
-            return allowedLines;
         }
     }
 }

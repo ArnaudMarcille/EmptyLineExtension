@@ -34,7 +34,7 @@ namespace EmptyLineExtention.Core.Controls
         /// <summary>
         /// List settings item
         /// </summary>
-        private ObservableCollection<SettingItem> settingsItems = new ObservableCollection<SettingItem>();
+        private readonly ObservableCollection<SettingItem> settingsItems = new ObservableCollection<SettingItem>();
 
         #endregion
 
@@ -59,6 +59,21 @@ namespace EmptyLineExtention.Core.Controls
         /// Allowed lines description
         /// </summary>
         public string AllowedLinesDesc { get { return Labels.SettingsControl_AllowedLinesDesc; } }
+
+        /// <summary>
+        /// UpLabel
+        /// </summary>
+        public string UpLabel { get { return Labels.SettingsControl_UpLabel; } }
+
+        /// <summary>
+        /// DownLabel
+        /// </summary>
+        public string DownLabel { get { return Labels.SettingsControl_DownLabel; } }
+
+        /// <summary>
+        /// ApplyLabel
+        /// </summary>
+        public string ApplyLabel { get { return Labels.SettingsControl_ApplyLabel; } }
 
         #endregion
 
@@ -124,6 +139,8 @@ namespace EmptyLineExtention.Core.Controls
             SettingsGrid.AutoGenerateColumns = false;
             SettingsGrid.CanUserAddRows = true;
 
+            RegexColumn.Header = Labels.SettingsControl_RegexLabel;
+            ValueColumn.Header = Labels.SettingsControl_ValueLabel;
             this.DataContext = this;
 
             settingsItems.CollectionChanged += OnSettingsListUpdated;
@@ -133,6 +150,12 @@ namespace EmptyLineExtention.Core.Controls
 
         #region Events
 
+        /// <summary>
+        /// On settings list updated
+        /// <para>Allow to manage updates on settings list for add or remove update events</para>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnSettingsListUpdated(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
@@ -154,6 +177,11 @@ namespace EmptyLineExtention.Core.Controls
             SaveState();
         }
 
+        /// <summary>
+        /// On <see cref="SettingItem"/> updated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPropertyUpdated(object sender, EventArgs e)
         {
             SaveState();
@@ -170,21 +198,71 @@ namespace EmptyLineExtention.Core.Controls
             e.Handled = !int.TryParse(e.Text, out value);
         }
 
-        #endregion
+        /// <summary>
+        /// On up click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_Up_Click(object sender, RoutedEventArgs e)
+        {
+            if (SettingsGrid.SelectedIndex <= 0)
+            {
+                return;
+            }
 
+            settingsItems.Move(SettingsGrid.SelectedIndex, SettingsGrid.SelectedIndex - 1);
+            SaveState();
+        }
+
+        /// <summary>
+        /// On down click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_Down_Click(object sender, RoutedEventArgs e)
+        {
+            if (SettingsGrid.SelectedIndex < 0 || SettingsGrid.SelectedIndex >= (settingsItems.Count - 1))
+            {
+                return;
+            }
+
+            settingsItems.Move(SettingsGrid.SelectedIndex, SettingsGrid.SelectedIndex + 1);
+            SaveState();
+        }
+
+        /// <summary>
+        /// Apply : save current state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_Apply_Click(object sender, RoutedEventArgs e)
         {
             SaveState();
         }
 
+        /// <summary>
+        /// Save current state on lost focus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
             SaveState();
         }
 
+        #endregion
+
+        #region Private methods
+
+        /// <summary>
+        /// Save current state
+        /// </summary>
         private void SaveState()
         {
             optionsPage.SetSettingItems(settingsItems.ToList());
         }
+
+        #endregion
+
     }
 }

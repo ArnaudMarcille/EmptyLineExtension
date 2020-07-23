@@ -1,4 +1,7 @@
-﻿using EnvDTE;
+﻿using System.Collections.Generic;
+using EmptyLineExtention.Core.Settings;
+using EnvDTE;
+using Newtonsoft.Json;
 
 namespace EmptyLineExtention.Services
 {
@@ -72,6 +75,46 @@ namespace EmptyLineExtention.Services
                 }
                 editPoint.LineDown(1);
             }
+        }
+
+        /// <summary>
+        /// Compute allowed lines
+        /// </summary>
+        /// <param name="documentName"></param>
+        /// <param name="optionPage"></param>
+        /// <returns></returns>
+        public static int? ComputeAllowedLines(string documentName, OptionPage optionPage)
+        {
+            int? allowedLines = null;
+
+            // try to read file configuration
+            if (!string.IsNullOrEmpty(optionPage.FilesConfigurations))
+            {
+                // file configuration is saved in string, so it's needs to be deseriasiled
+                List<SettingItem> items = JsonConvert.DeserializeObject<List<SettingItem>>(optionPage.FilesConfigurations);
+
+                // Call Regex service to find which allowed line to use
+                // If multiple match founds, the last one is taked
+                var result = RegexService.FindAllowedLinesForDocument(documentName, items);
+
+                if (result != null)
+                {
+                    allowedLines = result.Value;
+                }
+                /// if <see cref="optionPage.DefaultAllowedLines"/> is set to zero: keep null
+                else if (optionPage.DefaultAllowedLines != 0)
+                {
+                    allowedLines = optionPage.DefaultAllowedLines;
+                }
+            }
+            /// If there is no <see cref="OptionPage.FilesConfigurations"/>, then use default settings
+            /// if <see cref="OptionPage.DefaultAllowedLines"/> is set to zero: keep null
+            else if (optionPage.DefaultAllowedLines != 0)
+            {
+                allowedLines = optionPage.DefaultAllowedLines;
+            }
+
+            return allowedLines;
         }
     }
 }

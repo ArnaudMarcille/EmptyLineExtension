@@ -19,7 +19,7 @@ namespace EmptyLineExtention.Core.Localization {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Labels {
@@ -70,11 +70,21 @@ namespace EmptyLineExtention.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Here you can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn&apos;t set any value, the default value will be taken..
+        ///   Looks up a localized string similar to Above, you can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn&apos;t set any value, the default value will be taken.
+        ///Below, you can set the regex requests for your specific cases, if there is multiple match, the last one in the list will be taken..
         /// </summary>
         internal static string SettingsControl_AllowedLinesDesc {
             get {
                 return ResourceManager.GetString("SettingsControl_AllowedLinesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        internal static string SettingsControl_ApplyLabel {
+            get {
+                return ResourceManager.GetString("SettingsControl_ApplyLabel", resourceCulture);
             }
         }
         
@@ -88,11 +98,47 @@ namespace EmptyLineExtention.Core.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Down.
+        /// </summary>
+        internal static string SettingsControl_DownLabel {
+            get {
+                return ResourceManager.GetString("SettingsControl_DownLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string SettingsControl_Header {
             get {
                 return ResourceManager.GetString("SettingsControl_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regex.
+        /// </summary>
+        internal static string SettingsControl_RegexLabel {
+            get {
+                return ResourceManager.GetString("SettingsControl_RegexLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up.
+        /// </summary>
+        internal static string SettingsControl_UpLabel {
+            get {
+                return ResourceManager.GetString("SettingsControl_UpLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allowed lines.
+        /// </summary>
+        internal static string SettingsControl_ValueLabel {
+            get {
+                return ResourceManager.GetString("SettingsControl_ValueLabel", resourceCulture);
             }
         }
         
