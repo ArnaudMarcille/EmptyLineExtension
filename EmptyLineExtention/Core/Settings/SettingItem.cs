@@ -21,6 +21,11 @@ namespace EmptyLineExtention.Core.Settings
         /// </summary>
         public event EventHandler<MoveEventArgs> ItemMoved;
 
+        /// <summary>
+        /// Delete event
+        /// </summary>
+        public event EventHandler Deleted;
+
         #endregion
 
         #region Fields
@@ -77,6 +82,11 @@ namespace EmptyLineExtention.Core.Settings
         /// </summary>
         public ICommand DownCommand { get; set; }
 
+        /// <summary>
+        /// Delete command
+        /// </summary>
+        public ICommand DeleteCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -88,6 +98,7 @@ namespace EmptyLineExtention.Core.Settings
         {
             UpCommand = new Command(OnUpPress);
             DownCommand = new Command(OnDownpress);
+            DeleteCommand = new Command(OnDelete);
         }
 
         #endregion
@@ -108,6 +119,14 @@ namespace EmptyLineExtention.Core.Settings
         private void OnUpPress()
         {
             ItemMoved?.Invoke(this, new MoveEventArgs(MoveEnum.Up));
+        }
+
+        /// <summary>
+        /// On delete
+        /// </summary>
+        private void OnDelete()
+        {
+            Deleted?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

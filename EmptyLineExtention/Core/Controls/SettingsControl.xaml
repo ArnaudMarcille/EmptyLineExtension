@@ -42,16 +42,16 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 x:Name="RegexColumn"
-                                Width="50*"
+                                Width="60*"
                                 Binding="{Binding Key}"
                                 CanUserSort="False" />
                             <DataGridTextColumn
                                 x:Name="ValueColumn"
-                                Width="10*"
+                                Width="20*"
                                 Binding="{Binding Value}"
                                 CanUserSort="False" />
                             <DataGridTemplateColumn
-                                Width="auto"
+                                Width="10*"
                                 CanUserReorder="False"
                                 CanUserSort="False">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -89,6 +89,32 @@
                                                             Width="15"
                                                             Height="15"
                                                             Data="M469.205,277.333H352.341V10.667C352.341,4.776,347.566,0,341.675,0H171.008  c-5.891,0-10.667,4.776-10.667,10.667v266.667H43.008c-5.891,0.001-10.666,4.778-10.664,10.669c0.001,2.822,1.12,5.53,3.112,7.528  l212.8,213.504c2.001,2.007,4.718,3.135,7.552,3.136l0,0c2.831,0.005,5.548-1.115,7.552-3.115l213.333-213.504  c4.171-4.16,4.179-10.914,0.019-15.085C474.722,278.472,472.023,277.345,469.205,277.333z"
+                                                            Fill="Black"
+                                                            Stretch="Fill" />
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="10*"
+                                CanUserReorder="False"
+                                CanUserSort="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Button
+                                                Margin="5"
+                                                Command="{Binding DeleteCommand}"
+                                                Cursor="Hand">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Path
+                                                            Width="15"
+                                                            Height="15"
+                                                            Data="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285    L284.286,256.002z"
                                                             Fill="Black"
                                                             Stretch="Fill" />
                                                     </ControlTemplate>

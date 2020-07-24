@@ -120,6 +120,7 @@ namespace EmptyLineExtention.Core.Controls
             {
                 item.PropertyUpdated += OnPropertyUpdated;
                 item.ItemMoved += OnItemMoved;
+                item.Deleted += OnDeleted;
                 settingsItems.Add(item);
             }
 
@@ -155,6 +156,7 @@ namespace EmptyLineExtention.Core.Controls
                 {
                     (item as SettingItem).PropertyUpdated += OnPropertyUpdated;
                     (item as SettingItem).ItemMoved += OnItemMoved;
+                    (item as SettingItem).Deleted += OnDeleted;
                 }
             }
 
@@ -164,6 +166,7 @@ namespace EmptyLineExtention.Core.Controls
                 {
                     (item as SettingItem).PropertyUpdated -= OnPropertyUpdated;
                     (item as SettingItem).ItemMoved -= OnItemMoved;
+                    (item as SettingItem).Deleted -= OnDeleted;
                 }
             }
 
@@ -236,6 +239,27 @@ namespace EmptyLineExtention.Core.Controls
             }
 
             SaveState();
+        }
+
+        private void OnDeleted(object sender, EventArgs e)
+        {
+            var item = sender as SettingItem;
+            if (item == null)
+            {
+                return;
+            }
+            try
+            {
+                item.Deleted -= OnDeleted;
+                item.ItemMoved -= OnItemMoved;
+                item.PropertyUpdated -= OnPropertyUpdated;
+
+                settingsItems.Remove(item);
+            }
+            finally
+            {
+                SaveState();
+            }
         }
 
         #endregion
