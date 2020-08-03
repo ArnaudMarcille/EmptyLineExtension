@@ -15,7 +15,14 @@ namespace EmptyLineExtention.Core.Settings
         /// <returns></returns>
         public static List<SettingItem> GetSettingItems(this OptionPage optionPage)
         {
-            return JsonConvert.DeserializeObject<List<SettingItem>>(optionPage.FilesConfigurations);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<SettingItem>>(optionPage.FilesConfigurations);
+            }
+            catch
+            {
+                return new List<SettingItem>();
+            }
         }
 
         /// <summary>
@@ -25,7 +32,11 @@ namespace EmptyLineExtention.Core.Settings
         /// <param name="items"></param>
         public static void SetSettingItems(this OptionPage optionPage, List<SettingItem> items)
         {
-            optionPage.FilesConfigurations = JsonConvert.SerializeObject(items);
+            try
+            {
+                optionPage.FilesConfigurations = JsonConvert.SerializeObject(items);
+            }
+            catch { }
         }
     }
 }
