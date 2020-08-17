@@ -29,7 +29,7 @@ Once the extension is installed, a "Remove empty lines" option is available when
 
   
 
-![Image](https://i.goopics.net/3qgW8.png)
+![Image](/images/readMe_Option_01.png)
 
   
 
@@ -54,7 +54,7 @@ With the version 1.1.0, you can edit the number of allowed lines, for that go on
 
 Since version 1.3.0, you can now add some specific rules in regex. The regex will be apply to the file full path (path and file name).
 See below an exemple who will manage all the json file, and set the number of tolerated line to 0:
-![Image](https://i.goopics.net/3qgW8.png) // TODO UPDATE_IMAGE 
+![Image](/images/readMe_Settings_01.png) // TODO UPDATE_IMAGE 
 
 you can add multiples rules, and manage them as you want. 
 
