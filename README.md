@@ -6,7 +6,7 @@
 
 Visual Studio extension for remove empty lines (more than one consecutive empty line)
 
-[![Build Status](https://my-biblipi.visualstudio.com/Plugins/_apis/build/status/EmptyLine%20Extension%20build?branchName=master)](https://my-biblipi.visualstudio.com/Plugins/_build/latest?definitionId=3&branchName=master)
+[![Build Status](https://my-biblipi.visualstudio.com/Plugins/_apis/build/status/EmptyLine%20Extension%20build?branchName=master)](https://my-biblipi.visualstudio.com/Plugins/_build/latest?definitionId=3&branchName=_branch_)
   
 
 ## Getting Started
@@ -54,8 +54,6 @@ With the version 1.1.0, you can edit the number of allowed lines, for that go on
 
 Since version 1.3.0, you can choose to ignore the first lines of the file: if the first line is empty, all the following empty lines will not be removed. But at the first line who contains text, the seetings will be applied.
 ![Image](/images/readMe_Settings_02.png) 
-
-you can add multiples rules, and manage them as you want. 
 
 ## Regex
 
