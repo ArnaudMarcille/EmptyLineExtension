@@ -1,4 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using EmptyLineExtention.Core.Localization;
 using EmptyLineExtention.Core.Settings;
 
@@ -26,6 +31,11 @@ namespace EmptyLineExtention.Core.Controls
         /// </summary>
         internal OptionPage optionsPage;
 
+        /// <summary>
+        /// List settings item
+        /// </summary>
+        private readonly ObservableCollection<SettingItem> settingsItems = new ObservableCollection<SettingItem>();
+
         #endregion
 
         #region Translations
@@ -49,6 +59,11 @@ namespace EmptyLineExtention.Core.Controls
         /// Allowed lines description
         /// </summary>
         public string AllowedLinesDesc { get { return Labels.SettingsControl_AllowedLinesDesc; } }
+
+        /// <summary>
+        /// ApplyLabel
+        /// </summary>
+        public string ApplyLabel { get { return Labels.SettingsControl_ApplyLabel; } }
 
         #endregion
 
@@ -100,17 +115,73 @@ namespace EmptyLineExtention.Core.Controls
         /// </summary>
         public SettingsControl(OptionPage optionsPage)
         {
+            InitializeComponent();
+            foreach (var item in optionsPage.GetSettingItems())
+            {
+                item.PropertyUpdated += OnPropertyUpdated;
+                item.ItemMoved += OnItemMoved;
+                item.Deleted += OnDeleted;
+                settingsItems.Add(item);
+            }
+
             this.optionsPage = optionsPage;
             autoSaveEnabled = optionsPage.IsAutoSaveEnabled;
             allowedLines = optionsPage.AllowedLines;
+            SettingsGrid.ItemsSource = settingsItems;
+            SettingsGrid.AutoGenerateColumns = false;
+            SettingsGrid.CanUserAddRows = true;
 
-            InitializeComponent();
+            RegexColumn.Header = Labels.SettingsControl_RegexLabel;
+            ValueColumn.Header = Labels.SettingsControl_ValueLabel;
             this.DataContext = this;
+
+            settingsItems.CollectionChanged += OnSettingsListUpdated;
         }
 
         #endregion
 
         #region Events
+
+        /// <summary>
+        /// On settings list updated
+        /// <para>Allow to manage updates on settings list for add or remove update events</para>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSettingsListUpdated(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    (item as SettingItem).PropertyUpdated += OnPropertyUpdated;
+                    (item as SettingItem).ItemMoved += OnItemMoved;
+                    (item as SettingItem).Deleted += OnDeleted;
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (var item in e.OldItems)
+                {
+                    (item as SettingItem).PropertyUpdated -= OnPropertyUpdated;
+                    (item as SettingItem).ItemMoved -= OnItemMoved;
+                    (item as SettingItem).Deleted -= OnDeleted;
+                }
+            }
+
+            SaveState();
+        }
+
+        /// <summary>
+        /// On <see cref="SettingItem"/> updated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnPropertyUpdated(object sender, EventArgs e)
+        {
+            SaveState();
+        }
 
         /// <summary>
         /// Event for allow numeric values only
@@ -123,6 +194,87 @@ namespace EmptyLineExtention.Core.Controls
             e.Handled = !int.TryParse(e.Text, out value);
         }
 
+        /// <summary>
+        /// Apply : save current state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_Apply_Click(object sender, RoutedEventArgs e)
+        {
+            SaveState();
+        }
+
+        /// <summary>
+        /// Save current state on lost focus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_LostFocus(object sender, RoutedEventArgs e)
+        {
+            SaveState();
+        }
+
+        /// <summary>
+        /// Onitem moved
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnItemMoved(object sender, MoveEventArgs e)
+        {
+            var item = sender as SettingItem;
+            if (item == null)
+            {
+                return;
+            }
+
+            int index = settingsItems.IndexOf(item);
+
+            if (e.moveAction == MoveEnum.Up && index > 0)
+            {
+                settingsItems.Move(index, index - 1);
+            }
+            else if (e.moveAction == MoveEnum.Down && SettingsGrid.SelectedIndex < (settingsItems.Count - 1))
+            {
+                settingsItems.Move(index, index + 1);
+            }
+
+            SaveState();
+        }
+
+        private void OnDeleted(object sender, EventArgs e)
+        {
+            var item = sender as SettingItem;
+            if (item == null)
+            {
+                return;
+            }
+            try
+            {
+                item.Deleted -= OnDeleted;
+                item.ItemMoved -= OnItemMoved;
+                item.PropertyUpdated -= OnPropertyUpdated;
+
+                settingsItems.Remove(item);
+            }
+            finally
+            {
+                SaveState();
+            }
+        }
+
         #endregion
+
+        #region Private methods
+
+        /// <summary>
+        /// Save current state
+        /// </summary>
+        private void SaveState()
+        {
+            optionsPage.SetSettingItems(settingsItems.ToList());
+        }
+
+        #endregion
+
     }
 }

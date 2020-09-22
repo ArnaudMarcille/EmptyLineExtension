@@ -58,6 +58,7 @@ namespace EmptyLineExtention.Formatter
         /// <returns></returns>
         public int OnBeforeSave(uint docCookie)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var document = FindDocument(docCookie);
 
             if (document == null)
@@ -65,7 +66,11 @@ namespace EmptyLineExtention.Formatter
 
             if (GetAutoSavePropertyValue())
             {
-                EmptyLineService.FormatDocument(document, false, GetAllowedLinesValue(), dte);
+                int? allowedLines = GetAllowedLinesValue(document);
+                if (allowedLines.HasValue)
+                {
+                    EmptyLineService.FormatDocument(document, false, allowedLines.Value, dte);
+                }
             }
 
             return VSConstants.S_OK;
@@ -161,22 +166,18 @@ namespace EmptyLineExtention.Formatter
         /// Get the value of AllowedLines property
         /// </summary>
         /// <returns></returns>
-        private int GetAllowedLinesValue()
+        private int? GetAllowedLinesValue(Document document)
         {
-            OptionPage optionProperties = null;
             try
             {
-                optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+                ThreadHelper.ThrowIfNotOnUIThread();
+                OptionPage optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+                return EmptyLineService.ComputeAllowedLines(document.FullName, optionProperties);
             }
             catch (Exception)
             {
-                return Core.Constants.DefaultAllowedLines;
+                return null;
             }
-
-            if (optionProperties == null)
-                return Core.Constants.DefaultAllowedLines;
-
-            return optionProperties.DefaultAllowedLines;
         }
 
         #endregion

@@ -1,5 +1,7 @@
-﻿using EmptyLineExtention.Core.Localization;
+﻿using System.Collections.Generic;
+using EmptyLineExtention.Core.Settings;
 using EnvDTE;
+using Newtonsoft.Json;
 
 namespace EmptyLineExtention.Services
 {
@@ -21,68 +23,98 @@ namespace EmptyLineExtention.Services
             // Get the current Doc
             TextDocument activeDoc = document.Object() as TextDocument;
 
-            try
-            {
-                // open undo context
-                dte.UndoContext.Open(Labels.Undo_Removed);
-                // set default start point
-                int startPoint = 1;
-                int endPoint = activeDoc.EndPoint.Line;
-                // initialise edit point
-                var editPoint = activeDoc.CreateEditPoint(activeDoc.StartPoint);
+            // set default start point
+            int startPoint = 1;
+            int endPoint = activeDoc.EndPoint.Line;
+            // initialise edit point
+            var editPoint = activeDoc.CreateEditPoint(activeDoc.StartPoint);
 
-                // check if there is a selection
-                if (!activeDoc.Selection.IsEmpty && CanUseSelection)
+            // check if there is a selection
+            if (!activeDoc.Selection.IsEmpty && CanUseSelection)
+            {
+                startPoint = activeDoc.Selection.TopLine;
+                endPoint = activeDoc.Selection.BottomLine;
+                editPoint.LineDown(startPoint - 1);
+            }
+
+            // remove all multiple space between start and end point
+            int numberOfEmptyLines = 0;
+            for (int number = startPoint; number <= endPoint; number++)
+            {
+                bool lineDeleted = false;
+                string line = editPoint.GetLines(number, number + 1);
+                editPoint.CreateEditPoint();
+                if (string.IsNullOrWhiteSpace(line))
                 {
-                    startPoint = activeDoc.Selection.TopLine;
-                    endPoint = activeDoc.Selection.BottomLine;
-                    editPoint.LineDown(startPoint - 1);
+                    numberOfEmptyLines++;
+
+                    if (numberOfEmptyLines > AllowedLines)
+                    {
+                        editPoint.StartOfLine();
+                        // Delete "spaces"
+                        editPoint.Delete(line.Length);
+                        // Delete breakline
+                        editPoint.Delete(-1);
+
+                        lineDeleted = true;
+
+                        if (!activeDoc.Selection.IsEmpty)
+                            endPoint = activeDoc.Selection.BottomLine;
+                        else
+                            endPoint = activeDoc.EndPoint.Line;
+                    }
+                }
+                else
+                {
+                    numberOfEmptyLines = 0;
                 }
 
-                // remove all multiple space between start and end point
-                int numberOfEmptyLines = 0;
-                for (int number = startPoint; number <= endPoint; number++)
+                if (lineDeleted)
                 {
-                    bool lineDeleted = false;
-                    string line = editPoint.GetLines(number, number + 1);
-                    editPoint.CreateEditPoint();
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        numberOfEmptyLines++;
+                    number--;
+                }
+                editPoint.LineDown(1);
+            }
+        }
 
-                        if (numberOfEmptyLines > AllowedLines)
-                        {
-                            editPoint.StartOfLine();
-                            // Delete "spaces"
-                            editPoint.Delete(line.Length);
-                            // Delete breakline
-                            editPoint.Delete(-1);
+        /// <summary>
+        /// Compute allowed lines
+        /// </summary>
+        /// <param name="documentName"></param>
+        /// <param name="optionPage"></param>
+        /// <returns></returns>
+        public static int? ComputeAllowedLines(string documentName, OptionPage optionPage)
+        {
+            int? allowedLines = null;
 
-                            lineDeleted = true;
+            // try to read file configuration
+            if (!string.IsNullOrEmpty(optionPage.FilesConfigurations))
+            {
+                // file configuration is saved in string, so it's needs to be deseriasiled
+                List<SettingItem> items = JsonConvert.DeserializeObject<List<SettingItem>>(optionPage.FilesConfigurations);
 
-                            if (!activeDoc.Selection.IsEmpty)
-                                endPoint = activeDoc.Selection.BottomLine;
-                            else
-                                endPoint = activeDoc.EndPoint.Line;
-                        }
-                    }
-                    else
-                    {
-                        numberOfEmptyLines = 0;
-                    }
+                // Call Regex service to find which allowed line to use
+                // If multiple match founds, the last one is taked
+                var result = RegexService.FindAllowedLinesForDocument(documentName, items);
 
-                    if (lineDeleted)
-                    {
-                        number--;
-                    }
-                    editPoint.LineDown(1);
+                if (result != null)
+                {
+                    allowedLines = result.Value;
+                }
+                /// if <see cref="optionPage.DefaultAllowedLines"/> is set to zero: keep null
+                else if (optionPage.DefaultAllowedLines != 0)
+                {
+                    allowedLines = optionPage.DefaultAllowedLines;
                 }
             }
-            finally
+            /// If there is no <see cref="OptionPage.FilesConfigurations"/>, then use default settings
+            /// if <see cref="OptionPage.DefaultAllowedLines"/> is set to zero: keep null
+            else if (optionPage.DefaultAllowedLines != 0)
             {
-                // close undo context
-                dte.UndoContext.Close();
+                allowedLines = optionPage.DefaultAllowedLines;
             }
+
+            return allowedLines;
         }
     }
 }

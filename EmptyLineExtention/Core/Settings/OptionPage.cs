@@ -19,9 +19,23 @@ namespace EmptyLineExtention.Core.Settings
         /// </summary>
         private int? allowedLines;
 
+        /// <summary>
+        /// SettingItems
+        /// </summary>
+        private string filesConfigurations;
+
         #endregion
 
         #region Properties
+
+        [Category(Constants.AppName)]
+        [DisplayName("d")]
+        [Description("d")]
+        public string FilesConfigurations
+        {
+            get { return filesConfigurations; }
+            set { filesConfigurations = value; }
+        }
 
         [Category(Constants.AppName)]
         [DisplayName(Constants.AutoSavePropertyName)]
@@ -52,6 +66,15 @@ namespace EmptyLineExtention.Core.Settings
             {
                 return new SettingsControl(this);
             }
+        }
+
+        #endregion
+
+        #region Contructor
+
+        public OptionPage()
+        {
+
         }
 
         #endregion

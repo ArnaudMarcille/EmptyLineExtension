@@ -88,32 +88,39 @@ namespace EmptyLineExtention.Commands
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs e)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             // Get the current Doc
             EnvDTE80.DTE2 applicationObject = ServiceProvider.GetService(typeof(DTE)) as EnvDTE80.DTE2;
 
-            EmptyLineService.FormatDocument(applicationObject.ActiveDocument, true, GetAllowedLinesValue(), applicationObject);
+            if (applicationObject == null)
+            {
+                return;
+            }
+
+            int? allowedLines = GetAllowedLinesValue(applicationObject.ActiveDocument);
+            if (allowedLines.HasValue)
+            {
+                EmptyLineService.FormatDocument(applicationObject.ActiveDocument, true, allowedLines.Value, applicationObject);
+            }
         }
 
         /// <summary>
         /// Get the value of AllowedLines property
         /// </summary>
         /// <returns></returns>
-        private int GetAllowedLinesValue()
+        private int? GetAllowedLinesValue(Document document)
         {
-            OptionPage optionProperties = null;
             try
             {
-                optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+                ThreadHelper.ThrowIfNotOnUIThread();
+                OptionPage optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+                return EmptyLineService.ComputeAllowedLines(document.FullName, optionProperties);
             }
             catch (Exception)
             {
-                return Core.Constants.DefaultAllowedLines;
+                return null;
             }
-
-            if (optionProperties == null)
-                return Core.Constants.DefaultAllowedLines;
-
-            return optionProperties.DefaultAllowedLines;
         }
     }
 }

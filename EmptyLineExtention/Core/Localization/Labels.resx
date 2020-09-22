@@ -121,13 +121,23 @@
     <value>Allowed lines (default is 1) :</value>
   </data>
   <data name="SettingsControl_AllowedLinesDesc" xml:space="preserve">
-    <value>Here you can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn't set any value, the default value will be taken.</value>
+    <value>Above, you can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn't set any value, the default value will be taken.
+Below, you can set the regex requests for your specific cases, if there is multiple match, the last one in the list will be taken.</value>
+  </data>
+  <data name="SettingsControl_ApplyLabel" xml:space="preserve">
+    <value>Apply</value>
   </data>
   <data name="SettingsControl_AutoFormat_Content" xml:space="preserve">
     <value>Enable auto format on document save.</value>
   </data>
   <data name="SettingsControl_Header" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SettingsControl_RegexLabel" xml:space="preserve">
+    <value>Regex</value>
+  </data>
+  <data name="SettingsControl_ValueLabel" xml:space="preserve">
+    <value>Allowed lines</value>
   </data>
   <data name="Undo_Removed" xml:space="preserve">
     <value>Remove empty lines</value>
