@@ -46,6 +46,16 @@
         /// </summary>
         public const int DefaultAllowedLines = 1;
 
+        /// <summary>
+        /// name of the managing first line property
+        /// </summary>
+        public const string IgnoreFirstLine = "Manage first line";
+
+        /// <summary>
+        /// description  of the managing first line property
+        /// </summary>
+        public const string IgnoreFirstLineDesc = "Allow to manage the first lines of the file";
+
         #endregion
 
     }

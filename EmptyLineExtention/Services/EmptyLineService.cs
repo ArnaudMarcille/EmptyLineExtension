@@ -16,7 +16,7 @@ namespace EmptyLineExtention.Services
         /// <param name="document"></param>
         /// <param name="CanUseSelection"></param>
         /// <param name="AllowedLines"></param>
-        public static void FormatDocument(Document document, bool CanUseSelection, int AllowedLines, _DTE dte)
+        public static void FormatDocument(Document document, bool CanUseSelection, int AllowedLines, _DTE dte, bool ignoreStartLines)
         {
             Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -29,12 +29,16 @@ namespace EmptyLineExtention.Services
             // initialise edit point
             var editPoint = activeDoc.CreateEditPoint(activeDoc.StartPoint);
 
+            // Set is start line variable
+            bool isStartLines = true;
+
             // check if there is a selection
             if (!activeDoc.Selection.IsEmpty && CanUseSelection)
             {
                 startPoint = activeDoc.Selection.TopLine;
                 endPoint = activeDoc.Selection.BottomLine;
                 editPoint.LineDown(startPoint - 1);
+                isStartLines = false;
             }
 
             // remove all multiple space between start and end point
@@ -48,7 +52,9 @@ namespace EmptyLineExtention.Services
                 {
                     numberOfEmptyLines++;
 
-                    if (numberOfEmptyLines > AllowedLines)
+                    // Verify if the managed lines are the first one and if trim is needed
+                    bool manageFirstLines = ((ignoreStartLines && !isStartLines) || !ignoreStartLines);
+                    if (numberOfEmptyLines > AllowedLines && manageFirstLines)
                     {
                         editPoint.StartOfLine();
                         // Delete "spaces"
@@ -67,6 +73,7 @@ namespace EmptyLineExtention.Services
                 else
                 {
                     numberOfEmptyLines = 0;
+                    isStartLines = false;
                 }
 
                 if (lineDeleted)

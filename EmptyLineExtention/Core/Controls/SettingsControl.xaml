@@ -25,6 +25,11 @@
                         Content="{Binding AutoSaveContent}"
                         IsChecked="{Binding AutoSaveEnabled}" />
                     <Separator />
+                    <CheckBox
+                        Margin="0,5,0,5"
+                        Content="{Binding IgnoreFirstLinesContent}"
+                        IsChecked="{Binding IgnoreFirstLinesEnabled}" />
+                    <Separator />
                     <TextBlock Margin="0,5,0,5" Text="{Binding AllowedLinesContent}" />
                     <TextBox
                         Name="tbx_NumericValue"
