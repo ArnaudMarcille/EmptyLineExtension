@@ -6,7 +6,7 @@
 
 Visual Studio extension for remove empty lines (more than one consecutive empty line)
 
-[![Build Status](https://my-biblipi.visualstudio.com/Plugins/_apis/build/status/EmptyLine%20Extension%20build?branchName=master)](https://my-biblipi.visualstudio.com/Plugins/_build/latest?definitionId=3&branchName=_branch_)
+[![Build Status](https://my-biblipi.visualstudio.com/Plugins/_apis/build/status/EmptyLine%20Extension%20build?branchName=master)](https://my-biblipi.visualstudio.com/Plugins/_build/latest?definitionId=3&branchName=master)
   
 
 ## Getting Started
