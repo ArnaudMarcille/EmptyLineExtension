@@ -83,7 +83,6 @@ namespace EmptyLineExtention.Formatter
 
             base.Initialize();
         }
-       
 
         #endregion
     }

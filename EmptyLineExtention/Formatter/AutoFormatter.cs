@@ -69,7 +69,7 @@ namespace EmptyLineExtention.Formatter
                 int? allowedLines = GetAllowedLinesValue(document);
                 if (allowedLines.HasValue)
                 {
-                    EmptyLineService.FormatDocument(document, false, allowedLines.Value, dte);
+                    EmptyLineService.FormatDocument(document, false, allowedLines.Value, dte, GetIgnoreStartLinesSetting());
                 }
             }
 
@@ -177,6 +177,23 @@ namespace EmptyLineExtention.Formatter
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Return <see cref="OptionPage.IgnoreStartingLines"/> setting
+        /// </summary>
+        /// <returns></returns>
+        private bool GetIgnoreStartLinesSetting()
+        {
+            try
+            {
+                OptionPage optionProperties = (OptionPage)package.GetDialogPage(typeof(OptionPage));
+                return optionProperties.IgnoreStartingLines;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 

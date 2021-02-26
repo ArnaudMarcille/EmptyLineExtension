@@ -32,6 +32,11 @@ namespace EmptyLineExtention.Core.Controls
         internal OptionPage optionsPage;
 
         /// <summary>
+        /// Ignore first lines enabled
+        /// </summary>
+        private bool ignoreFirstLinesEnabled;
+
+        /// <summary>
         /// List settings item
         /// </summary>
         private readonly ObservableCollection<SettingItem> settingsItems = new ObservableCollection<SettingItem>();
@@ -61,9 +66,14 @@ namespace EmptyLineExtention.Core.Controls
         public string AllowedLinesDesc { get { return Labels.SettingsControl_AllowedLinesDesc; } }
 
         /// <summary>
-        /// ApplyLabel
+        /// Apply translation
         /// </summary>
         public string ApplyLabel { get { return Labels.SettingsControl_ApplyLabel; } }
+
+        /// <summary>
+        /// Ignore first lines translation
+        /// </summary>
+        public string IgnoreFirstLinesContent { get { return Labels.SettingsControl_IgnoreFirstLinesContent; } }
 
         #endregion
 
@@ -86,7 +96,7 @@ namespace EmptyLineExtention.Core.Controls
         }
 
         /// <summary>
-        ///  Option page instance
+        /// Allowed lines
         /// </summary>
         public string AllowedLines
         {
@@ -103,6 +113,19 @@ namespace EmptyLineExtention.Core.Controls
                     allowedLines = null;
                 }
                 optionsPage.AllowedLines = allowedLines;
+            }
+        }
+
+        /// <summary>
+        /// Ignore first lines enabled
+        /// </summary>
+        public bool IgnoreFirstLinesEnabled
+        {
+            get { return ignoreFirstLinesEnabled; }
+            set
+            {
+                ignoreFirstLinesEnabled = value;
+                optionsPage.IgnoreStartingLines = ignoreFirstLinesEnabled;
             }
         }
 
@@ -127,6 +150,7 @@ namespace EmptyLineExtention.Core.Controls
             this.optionsPage = optionsPage;
             autoSaveEnabled = optionsPage.IsAutoSaveEnabled;
             allowedLines = optionsPage.AllowedLines;
+            ignoreFirstLinesEnabled = optionsPage.IgnoreStartingLines;
             SettingsGrid.ItemsSource = settingsItems;
             SettingsGrid.AutoGenerateColumns = false;
             SettingsGrid.CanUserAddRows = true;

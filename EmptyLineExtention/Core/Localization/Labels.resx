@@ -133,6 +133,9 @@ Below, you can set the regex requests for your specific cases, if there is multi
   <data name="SettingsControl_Header" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="SettingsControl_IgnoreFirstLinesContent" xml:space="preserve">
+    <value>Ignore the start of the file</value>
+  </data>
   <data name="SettingsControl_RegexLabel" xml:space="preserve">
     <value>Regex</value>
   </data>

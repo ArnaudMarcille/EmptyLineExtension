@@ -50,6 +50,11 @@ you can fint it in *Tools => Options => EmptyLine Extension*
 
 With the version 1.1.0, you can edit the number of allowed lines, for that go on "*Tools => Options => EmptyLine Extension*", and edit the option "Allowed lines", by default there is no values, in this case, 1 line is kept, if you didn't want any line, then set value to 0. All numbers are allowed for this option.
 
+## Ignore first line
+
+Since version 1.3.0, you can choose to ignore the first lines of the file: if the first line is empty, all the following empty lines will not be removed. But at the first line who contains text, the seetings will be applied.
+![Image](/images/readMe_Settings_02.png) 
+
 ## Regex
 
 Since version 1.3.0, you can now add some specific rules in regex. The regex will be apply to the file full path (path and file name).

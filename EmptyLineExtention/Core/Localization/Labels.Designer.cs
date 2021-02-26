@@ -107,6 +107,15 @@ namespace EmptyLineExtention.Core.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignore the start of the file.
+        /// </summary>
+        internal static string SettingsControl_IgnoreFirstLinesContent {
+            get {
+                return ResourceManager.GetString("SettingsControl_IgnoreFirstLinesContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regex.
         /// </summary>
         internal static string SettingsControl_RegexLabel {

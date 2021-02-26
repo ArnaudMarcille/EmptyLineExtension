@@ -24,6 +24,11 @@ namespace EmptyLineExtention.Core.Settings
         /// </summary>
         private string filesConfigurations;
 
+        /// <summary>
+        /// Manage starting lines
+        /// </summary>
+        private bool ignoreStartingLines;
+
         #endregion
 
         #region Properties
@@ -58,6 +63,15 @@ namespace EmptyLineExtention.Core.Settings
         public int DefaultAllowedLines
         {
             get { return allowedLines.HasValue ? allowedLines.Value : Core.Constants.DefaultAllowedLines; }
+        }
+
+        [Category(Constants.AppName)]
+        [DisplayName(Constants.IgnoreFirstLine)]
+        [Description(Constants.IgnoreFirstLineDesc)]
+        public bool IgnoreStartingLines
+        {
+            get { return ignoreStartingLines; }
+            set { ignoreStartingLines = value; }
         }
 
         protected override UIElement Child
