@@ -107,7 +107,7 @@ namespace EmptyLineExtention.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ignore the start of the file.
+        ///   Looks up a localized string similar to Delete all line at the start of the file.
         /// </summary>
         internal static string SettingsControl_IgnoreFirstLinesContent {
             get {

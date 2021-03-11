@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using EmptyLineExtention.Core.Settings;
 
@@ -15,9 +16,9 @@ namespace EmptyLineExtention.Services
         /// <returns></returns>
         public static SettingItem FindAllowedLinesForDocument(string documentFullName, IList<SettingItem> settingItems)
         {
-            if (settingItems == null)
+            if (settingItems == null || !settingItems.Any())
             {
-                settingItems = new List<SettingItem>();
+                return null;
             }
 
             int i = 0;

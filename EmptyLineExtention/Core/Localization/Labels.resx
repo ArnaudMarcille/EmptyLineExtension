@@ -134,7 +134,7 @@ Below, you can set the regex requests for your specific cases, if there is multi
     <value>Settings</value>
   </data>
   <data name="SettingsControl_IgnoreFirstLinesContent" xml:space="preserve">
-    <value>Ignore the start of the file</value>
+    <value>Delete all line at the start of the file</value>
   </data>
   <data name="SettingsControl_RegexLabel" xml:space="preserve">
     <value>Regex</value>
