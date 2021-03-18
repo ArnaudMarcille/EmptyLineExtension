@@ -14,9 +14,9 @@ namespace EmptyLineExtention.Services
         /// Format document for remove empty line 
         /// </summary>
         /// <param name="document"></param>
-        /// <param name="CanUseSelection"></param>
-        /// <param name="AllowedLines"></param>
-        public static void FormatDocument(Document document, bool CanUseSelection, int AllowedLines, _DTE dte, bool ignoreStartLines)
+        /// <param name="canUseSelection"></param>
+        /// <param name="allowedLines"></param>
+        public static void FormatDocument(Document document, bool canUseSelection, int allowedLines, _DTE dte, bool deleteAllEmptyStartLines)
         {
             Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -33,7 +33,7 @@ namespace EmptyLineExtention.Services
             bool isStartLines = true;
 
             // check if there is a selection
-            if (!activeDoc.Selection.IsEmpty && CanUseSelection)
+            if (!activeDoc.Selection.IsEmpty && canUseSelection)
             {
                 startPoint = activeDoc.Selection.TopLine;
                 endPoint = activeDoc.Selection.BottomLine;
@@ -53,8 +53,8 @@ namespace EmptyLineExtention.Services
                     numberOfEmptyLines++;
 
                     // Verify if the managed lines are the first one and if trim is needed
-                    bool manageFirstLines = ((ignoreStartLines && !isStartLines) || !ignoreStartLines);
-                    if (numberOfEmptyLines > AllowedLines && manageFirstLines)
+                    bool manageFirstLines = deleteAllEmptyStartLines && isStartLines;
+                    if (numberOfEmptyLines > allowedLines || manageFirstLines)
                     {
                         editPoint.StartOfLine();
                         // Delete "spaces"
@@ -108,15 +108,13 @@ namespace EmptyLineExtention.Services
                 {
                     allowedLines = result.Value;
                 }
-                /// if <see cref="optionPage.DefaultAllowedLines"/> is set to zero: keep null
-                else if (optionPage.DefaultAllowedLines != 0)
+                else
                 {
                     allowedLines = optionPage.DefaultAllowedLines;
                 }
             }
             /// If there is no <see cref="OptionPage.FilesConfigurations"/>, then use default settings
-            /// if <see cref="OptionPage.DefaultAllowedLines"/> is set to zero: keep null
-            else if (optionPage.DefaultAllowedLines != 0)
+            else
             {
                 allowedLines = optionPage.DefaultAllowedLines;
             }
