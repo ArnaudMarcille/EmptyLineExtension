@@ -48,6 +48,8 @@ namespace EmptyLineExtention.Services
                 bool lineDeleted = false;
                 string line = editPoint.GetLines(number, number + 1);
                 editPoint.CreateEditPoint();
+
+                // Enter row deletion 
                 if (string.IsNullOrWhiteSpace(line))
                 {
                     numberOfEmptyLines++;
@@ -76,11 +78,19 @@ namespace EmptyLineExtention.Services
                     isStartLines = false;
                 }
 
+                // If line was deleted, remove 1 to number of line
                 if (lineDeleted)
                 {
                     number--;
                 }
+
                 editPoint.LineDown(1);
+
+                // Allow to avoid loop when file or selection are reduced to 1 row
+                if (startPoint == endPoint)
+                {
+                    number = endPoint;
+                }
             }
         }
 
