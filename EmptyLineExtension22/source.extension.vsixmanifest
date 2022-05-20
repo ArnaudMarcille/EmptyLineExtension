@@ -5,8 +5,6 @@
         <DisplayName>EmptyLine Extension 22</DisplayName>
         <Description xml:space="preserve">Visual Studio extension for remove empty lines (more than one consecutive empty line)</Description>
         <MoreInfo>https://github.com/ArnaudMarcille/EmptyLineExtension</MoreInfo>
-        <Icon>Resources\Icon.png</Icon>
-        <PreviewImage>Resources\Icon.png</PreviewImage>
         <Tags >Empty Clean lines remove emptyline delete vide ligne supprimer</Tags>
     </Metadata>
     <Installation>
