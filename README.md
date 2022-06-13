@@ -49,4 +49,4 @@ you can add multiples rules, and manage them as you want.
 
 ### Prerequisites
 
-The extension is only available Visual Studio 2017 and 2019.
+The extension is only available Visual Studio 2017, 2019, 2022. 
