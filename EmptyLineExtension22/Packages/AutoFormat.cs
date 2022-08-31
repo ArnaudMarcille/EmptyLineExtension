@@ -33,7 +33,7 @@ namespace EmptyLineExtension22.Packages
         /// Auto formatter instance
         /// </summary>
         private RunningDocTableEvents plugin;
-        
+
         /// <summary>
         /// Is a document update in progress
         /// </summary>
@@ -78,7 +78,7 @@ namespace EmptyLineExtension22.Packages
         /// <returns></returns>
         private async Task OnBeforeSaveAsync(object arg1, EventArgs arg2)
         {
-            if (working)
+            if (working || !IsAutoFormatEnabled())
             {
                 return;
             }
@@ -103,6 +103,23 @@ namespace EmptyLineExtension22.Packages
             finally
             {
                 working = false;
+            }
+        }
+
+        /// <summary>
+        /// Return true if auto format is enabled
+        /// </summary>
+        /// <returns></returns>
+        private bool IsAutoFormatEnabled()
+        {
+            try
+            {
+                OptionPage optionProperties = (OptionPage)GetDialogPage(typeof(OptionPage));
+                return optionProperties.IsAutoSaveEnabled;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
