@@ -61,6 +61,15 @@ namespace EmptyLineExtension22.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new regex rule.
+        /// </summary>
+        public static string SettingsControl_AddNewRegex {
+            get {
+                return ResourceManager.GetString("SettingsControl_AddNewRegex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allowed lines (default is 1) :.
         /// </summary>
         public static string SettingsControl_AllowedLines {
@@ -70,8 +79,7 @@ namespace EmptyLineExtension22.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Above, you can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn&apos;t set any value, the default value will be taken.
-        ///Below, you can set the regex requests for your specific cases, if there is multiple match, the last one in the list will be taken..
+        ///   Looks up a localized string similar to You can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn&apos;t set any value, the default value will be taken..
         /// </summary>
         public static string SettingsControl_AllowedLinesDesc {
             get {
@@ -116,20 +124,65 @@ namespace EmptyLineExtension22.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Down.
+        /// </summary>
+        public static string SettingsControl_MoveDown {
+            get {
+                return ResourceManager.GetString("SettingsControl_MoveDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up.
+        /// </summary>
+        public static string SettingsControl_MoveUp {
+            get {
+                return ResourceManager.GetString("SettingsControl_MoveUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can set the regex requests for your specific cases, if there is multiple match, the last one in the list will be taken..
+        /// </summary>
+        public static string SettingsControl_RegexDesc {
+            get {
+                return ResourceManager.GetString("SettingsControl_RegexDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regex.
         /// </summary>
-        public static string SettingsControl_RegexLabel {
+        public static string SettingsControl_RegexGridContent {
             get {
-                return ResourceManager.GetString("SettingsControl_RegexLabel", resourceCulture);
+                return ResourceManager.GetString("SettingsControl_RegexGridContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string SettingsControl_RegexGridRemove {
+            get {
+                return ResourceManager.GetString("SettingsControl_RegexGridRemove", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Allowed lines.
         /// </summary>
-        public static string SettingsControl_ValueLabel {
+        public static string SettingsControl_RegexGridValue {
             get {
-                return ResourceManager.GetString("SettingsControl_ValueLabel", resourceCulture);
+                return ResourceManager.GetString("SettingsControl_RegexGridValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regex.
+        /// </summary>
+        public static string SettingsControl_RegexLabel {
+            get {
+                return ResourceManager.GetString("SettingsControl_RegexLabel", resourceCulture);
             }
         }
         

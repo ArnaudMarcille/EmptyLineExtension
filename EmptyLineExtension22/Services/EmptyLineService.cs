@@ -22,7 +22,6 @@ namespace EmptyLineExtension22.Services
         {
             if (document?.TextView == null) return;
 
-
             SnapshotPoint position = document.TextView.Caret.Position.BufferPosition;
 
             using (ITextEdit edit = document.TextBuffer.CreateEdit())
@@ -69,7 +68,7 @@ namespace EmptyLineExtension22.Services
         private static void ReplaceContentText(int allowedLines, bool deleteAllEmptyStartLines, ITextEdit edit, DocumentView document, int? startPosition, int? endPosition)
         {
             var textView = document.TextView;
-            var lines = textView.TextViewLines;
+            var lines = textView.TextSnapshot.Lines.ToList();
             int count = 0;
             foreach (var line in lines)
             {
@@ -97,7 +96,7 @@ namespace EmptyLineExtension22.Services
                     if (line == lines.Last())
                     {
                         var lastLine = lines.ElementAt(lines.IndexOf(line) - 1);
-                        snapshot = new SnapshotSpan(lastLine.Start, lastLine.EndIncludingLineBreak);
+                        snapshot = new SnapshotSpan(lastLine.End, line.EndIncludingLineBreak);
                     }
 
                     edit.Delete(snapshot.Start.Position, snapshot.Length);

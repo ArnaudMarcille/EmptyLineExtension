@@ -46,10 +46,6 @@ namespace EmptyLineExtension22.Options
         /// </summary>
         private bool ignoreFirstLinesEnabled;
 
-        /// <summary>
-        /// List settings item
-        /// </summary>
-        private readonly ObservableCollection<SettingItem> settingsItems = new ObservableCollection<SettingItem>();
 
         #endregion
 
@@ -76,6 +72,10 @@ namespace EmptyLineExtension22.Options
         public string AllowedLinesDesc { get { return Labels.SettingsControl_AllowedLinesDesc; } }
 
         /// <summary>
+        /// Regec description
+        /// </summary>
+        public string RegexDesc { get { return Labels.SettingsControl_RegexDesc; } }
+        /// <summary>
         /// Apply translation
         /// </summary>
         public string ApplyLabel { get { return Labels.SettingsControl_ApplyLabel; } }
@@ -84,6 +84,41 @@ namespace EmptyLineExtension22.Options
         /// Ignore first lines translation
         /// </summary>
         public string IgnoreFirstLinesContent { get { return Labels.SettingsControl_IgnoreFirstLinesContent; } }
+
+        /// <summary>
+        /// Move up label
+        /// </summary>
+        public string MoveUpLabel { get { return Labels.SettingsControl_MoveUp; } }
+
+        /// <summary>
+        /// Move down label
+        /// </summary>
+        public string MoveDownLabel { get { return Labels.SettingsControl_MoveDown; } }
+
+        /// <summary>
+        /// Regex grid remove label
+        /// </summary>
+        public string RegexGridRemoveLabel { get { return Labels.SettingsControl_RegexGridRemove; } }
+
+        /// <summary>
+        /// Regex label
+        /// </summary>
+        public string RegexLabel { get { return Labels.SettingsControl_RegexLabel; } }
+
+        /// <summary>
+        /// regex grid label
+        /// </summary>
+        public string RegexGridLabel { get { return Labels.SettingsControl_RegexGridContent; } }
+
+        /// <summary>
+        /// Regex grid value
+        /// </summary>
+        public string RegexGridValueLabel { get { return Labels.SettingsControl_RegexGridValue; } }
+
+        /// <summary>
+        /// regex add new label
+        /// </summary>
+        public string AddNewRegexLabel { get { return Labels.SettingsControl_AddNewRegex; } }
 
         #endregion
 
@@ -139,6 +174,11 @@ namespace EmptyLineExtension22.Options
             }
         }
 
+        /// <summary>
+        /// List settings item
+        /// </summary>
+        public ObservableCollection<SettingItem> SettingsItems { get; set; } = new ObservableCollection<SettingItem>();
+
         #endregion
 
         #region Constructor
@@ -154,22 +194,16 @@ namespace EmptyLineExtension22.Options
                 item.PropertyUpdated += OnPropertyUpdated;
                 item.ItemMoved += OnItemMoved;
                 item.Deleted += OnDeleted;
-                settingsItems.Add(item);
+                SettingsItems.Add(item);
             }
 
             this.optionsPage = optionsPage;
             autoSaveEnabled = optionsPage.IsAutoSaveEnabled;
             allowedLines = optionsPage.AllowedLines;
             ignoreFirstLinesEnabled = optionsPage.IgnoreStartingLines;
-            SettingsGrid.ItemsSource = settingsItems;
-            SettingsGrid.AutoGenerateColumns = false;
-            SettingsGrid.CanUserAddRows = true;
-
-            RegexColumn.Header = Labels.SettingsControl_RegexLabel;
-            ValueColumn.Header = Labels.SettingsControl_ValueLabel;
             this.DataContext = this;
 
-            settingsItems.CollectionChanged += OnSettingsListUpdated;
+            SettingsItems.CollectionChanged += OnSettingsListUpdated;
         }
 
         #endregion
@@ -261,15 +295,15 @@ namespace EmptyLineExtension22.Options
                 return;
             }
 
-            int index = settingsItems.IndexOf(item);
+            int index = SettingsItems.IndexOf(item);
 
             if (e.moveAction == MoveEnum.Up && index > 0)
             {
-                settingsItems.Move(index, index - 1);
+                SettingsItems.Move(index, index - 1);
             }
-            else if (e.moveAction == MoveEnum.Down && SettingsGrid.SelectedIndex < (settingsItems.Count - 1))
+            else if (e.moveAction == MoveEnum.Down && item != SettingsItems.Last())
             {
-                settingsItems.Move(index, index + 1);
+                SettingsItems.Move(index, index + 1);
             }
 
             SaveState();
@@ -288,10 +322,15 @@ namespace EmptyLineExtension22.Options
                 item.ItemMoved -= OnItemMoved;
                 item.PropertyUpdated -= OnPropertyUpdated;
 
-                settingsItems.Remove(item);
+                SettingsItems.Remove(item);
             }
             finally
             {
+                if (!SettingsItems.Any())
+                {
+                    btn_AddRegexRule_Click(this, new RoutedEventArgs());
+                }
+
                 SaveState();
             }
         }
@@ -305,9 +344,14 @@ namespace EmptyLineExtension22.Options
         /// </summary>
         private void SaveState()
         {
-            optionsPage.SetSettingItems(settingsItems.ToList());
+            optionsPage.SetSettingItems(SettingsItems.ToList());
         }
 
+        private void btn_AddRegexRule_Click(object sender, RoutedEventArgs e)
+        {
+            SettingItem item = new SettingItem();
+            SettingsItems.Add(item);
+        }
         #endregion
     }
 }

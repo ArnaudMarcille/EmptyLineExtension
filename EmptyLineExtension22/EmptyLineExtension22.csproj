@@ -63,6 +63,9 @@
     <Compile Include="Options\OptionPage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Options\RegexItem.xaml.cs">
+      <DependentUpon>RegexItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Options\Ressources\Command.cs" />
     <Compile Include="Options\Ressources\MoveEnum.cs" />
     <Compile Include="Options\Ressources\MoveEventArgs.cs" />
@@ -145,6 +148,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Options\RegexItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Options\SettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

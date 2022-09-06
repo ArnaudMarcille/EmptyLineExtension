@@ -117,12 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="SettingsControl_AddNewRegex" xml:space="preserve">
+    <value>Add new regex rule</value>
+  </data>
   <data name="SettingsControl_AllowedLines" xml:space="preserve">
     <value>Allowed lines (default is 1) :</value>
   </data>
   <data name="SettingsControl_AllowedLinesDesc" xml:space="preserve">
-    <value>Above, you can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn't set any value, the default value will be taken.
-Below, you can set the regex requests for your specific cases, if there is multiple match, the last one in the list will be taken.</value>
+    <value>You can set the number of tolerated lines, if you want no line, just set it to 0. The default value is setted to 1, if you didn't set any value, the default value will be taken.</value>
   </data>
   <data name="SettingsControl_ApplyLabel" xml:space="preserve">
     <value>Apply</value>
@@ -136,11 +138,26 @@ Below, you can set the regex requests for your specific cases, if there is multi
   <data name="SettingsControl_IgnoreFirstLinesContent" xml:space="preserve">
     <value>Delete all line at the start of the file</value>
   </data>
-  <data name="SettingsControl_RegexLabel" xml:space="preserve">
+  <data name="SettingsControl_MoveDown" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="SettingsControl_MoveUp" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="SettingsControl_RegexDesc" xml:space="preserve">
+    <value>You can set the regex requests for your specific cases, if there is multiple match, the last one in the list will be taken.</value>
+  </data>
+  <data name="SettingsControl_RegexGridContent" xml:space="preserve">
     <value>Regex</value>
   </data>
-  <data name="SettingsControl_ValueLabel" xml:space="preserve">
+  <data name="SettingsControl_RegexGridRemove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="SettingsControl_RegexGridValue" xml:space="preserve">
     <value>Allowed lines</value>
+  </data>
+  <data name="SettingsControl_RegexLabel" xml:space="preserve">
+    <value>Regex</value>
   </data>
   <data name="Undo_Removed" xml:space="preserve">
     <value>Remove empty lines</value>
